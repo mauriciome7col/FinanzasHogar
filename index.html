@@ -139,7 +139,7 @@ input:checked+.ts:before{transform:translateX(20px);}
   .sh{font-size:10px;padding:7px 10px;margin:20px 0 10px;}
   .cs-wrap{grid-template-columns:1fr!important;}
   #selectorRow{grid-template-columns:1fr!important;}
-  .author-line{display:none!important;}
+
   .cs-btn{padding:10px 12px;}
   .cs-flag{font-size:22px;}
   .cs-name{font-size:13px;}
@@ -176,7 +176,7 @@ input:checked+.ts:before{transform:translateX(20px);}
   /* Header */
   header{padding:0 12px;height:auto;flex-wrap:wrap;padding-top:8px;padding-bottom:8px;gap:8px;}
   .th1{font-size:15px!important;}
-  .author-line{display:none!important;}
+
   .nav-pills{display:none;}
   .tog-w span{font-size:11px;}
 
@@ -280,11 +280,12 @@ input:checked+.ts:before{transform:translateX(20px);}
 <body>
 <header>
   <div class="logo" style="font-size:18px;background:linear-gradient(135deg,#6366f1,#3b82f6);">&#127775;</div>
-  <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;">
-    <div class="th1" style="font-size:20px;font-weight:800;background:linear-gradient(90deg,#6366f1,#3b82f6,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-.02em;">Planeaci&oacute;n Financiera</div>
-    <div class="author-line" style="font-size:11px;color:var(--muted);white-space:nowrap;">
-      Creado por &nbsp;<span style="font-weight:700;font-size:12px;background:linear-gradient(90deg,#f59e0b,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Mauricio Montoya E.</span>
-      &nbsp;<span style="font-size:10px;color:var(--muted);">Master en Corporate Finance</span>
+  <div style="display:flex;flex-direction:column;gap:2px;min-width:0;flex:1;">
+    <div class="th1" style="font-size:20px;font-weight:800;background:linear-gradient(90deg,#6366f1,#3b82f6,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-.02em;white-space:nowrap;">Planeaci&oacute;n Financiera</div>
+    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+      <span style="font-size:11px;color:var(--muted);">Creado por</span>
+      <span style="font-weight:700;font-size:12px;background:linear-gradient(90deg,#f59e0b,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;white-space:nowrap;">Mauricio Montoya E.</span>
+      <span style="font-size:10px;color:var(--muted);white-space:nowrap;">· Master en Corporate Finance</span>
     </div>
   </div>
   <div class="sp"></div>
