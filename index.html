@@ -2,7 +2,7 @@
 <html lang="es" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=1200">
 <title>&#127775; Planeación Financiera</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
@@ -10,7 +10,7 @@
 *{box-sizing:border-box;margin:0;padding:0;transition:background .25s,color .25s,border-color .25s;}
 :root{--bg:#0d1117;--card:#1a2236;--card2:#1e2a3a;--text:#fff;--muted:#8899bb;--border:#2a3a52;--border2:#364a66;--ac-blue:#3b82f6;--ac-cyan:#06b6d4;--ac-amber:#f59e0b;--ac-green:#22c55e;--ac-indigo:#6366f1;--ac-red:#f87171;--ac-purple:#c084fc;--tot-bg:rgba(59,130,246,.08);--tot-bd:#3b82f6;--grp:#131c2b;}
 [data-theme="light"]{--bg:#f0f4fb;--card:#fff;--card2:#f4f7fd;--text:#0f1a35;--muted:#5a6a8a;--border:#d0d9ee;--border2:#b8c5de;--tot-bg:rgba(59,130,246,.06);--grp:#e8edf6;}
-body{font-family:'Inter','Aptos',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;}
+body{font-family:'Inter','Aptos',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;overflow-x:hidden;}
 
 /* HEADER */
 header{background:var(--card);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;gap:16px;height:56px;position:sticky;top:0;z-index:100;}
@@ -30,7 +30,7 @@ input:checked+.ts{background:var(--ac-blue);}
 input:checked+.ts:before{transform:translateX(20px);}
 
 /* PAGE */
-.page{max-width:1100px;margin:0 auto;padding:24px 22px 48px;}
+.page{max-width:1100px;margin:0 auto;padding:24px 22px 48px;width:100%;box-sizing:border-box;}
 .sh{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin:28px 0 14px;padding:10px 16px;border-radius:10px;display:flex;align-items:center;gap:9px;color:#fff;}
 .sh:first-child{margin-top:0;}
 .sh.c-blue{background:linear-gradient(90deg,#1d4ed8,#3b82f6);box-shadow:0 2px 12px rgba(59,130,246,.3);}
@@ -46,7 +46,7 @@ input:checked+.ts:before{transform:translateX(20px);}
 .sb{background:rgba(255,255,255,.22);color:#fff;border-radius:5px;padding:3px 9px;font-size:10px;font-weight:700;letter-spacing:.04em;}
 
 /* COUNTRY SELECTOR */
-.cs-wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;}
+.cs-wrap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:20px;}
 .cs-btn{background:var(--card);border:2px solid var(--border);border-radius:12px;padding:14px 16px;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:12px;transition:all .2s;text-align:left;}
 .cs-btn:hover{border-color:var(--border2);}
 .cs-btn.on{border-color:var(--ac-blue);background:rgba(59,130,246,.08);}
@@ -58,20 +58,20 @@ input:checked+.ts:before{transform:translateX(20px);}
 .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;}
 .card-t{font-size:11px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px;opacity:.7;}
 .if label{display:block;font-size:11px;color:var(--muted);margin-bottom:5px;font-weight:500;}
-.ni{width:100%;background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:8px 12px;font-size:14px;font-family:inherit;text-align:right;outline:none;transition:border-color .15s;-webkit-appearance:none;}
+.ni{width:100%;min-width:0;background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:8px 12px;font-size:14px;font-family:inherit;text-align:right;outline:none;transition:border-color .15s;-webkit-appearance:none;box-sizing:border-box;}
 .ni:focus{border-color:var(--ac-blue);background:var(--card);}
 .sal-row{display:flex;align-items:center;gap:12px;}
 .sal-row input[type=range]{flex:1;accent-color:var(--ac-blue);}
 .sal-v{font-size:15px;font-weight:600;min-width:140px;text-align:right;color:var(--ac-cyan);}
 
 /* KPI */
-.kgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:14px;}
-.kc{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px 12px;}
+.kgrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px;margin-bottom:14px;}
+.kc{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 10px;min-width:0;overflow:hidden;}
 .kc.acc{border-color:var(--ac-blue);}
-.kl{font-size:10px;color:var(--muted);margin-bottom:3px;}.kv{font-size:18px;font-weight:600;}.ks{font-size:10px;color:var(--muted);margin-top:2px;}
+.kl{font-size:10px;color:var(--muted);margin-bottom:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}.kv{font-size:16px;font-weight:600;white-space:nowrap;}.ks{font-size:10px;color:var(--muted);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 
 /* TABLE */
-.tw{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.tw{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;width:100%;}
 .tw-wide{overflow-x:auto;-webkit-overflow-scrolling:touch;}
 .ft{width:100%;border-collapse:collapse;font-size:13px;}
 .ft th{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;padding:11px 14px;background:var(--grp);border-bottom:1px solid var(--border);}
@@ -85,15 +85,15 @@ input:checked+.ts:before{transform:translateX(20px);}
 .ft .hl td{background:rgba(59,130,246,.12);font-weight:500;}
 
 /* EXPENSES */
-.egrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+.egrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px;margin-bottom:14px;}
 .er{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:9px 12px;}
 .er label{font-size:12px;color:var(--muted);flex:1;}
 .ei{background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:7px;padding:6px 10px;font-size:13px;width:145px;text-align:right;font-family:inherit;outline:none;transition:border-color .15s;-webkit-appearance:none;}
 .ei:focus{border-color:var(--ac-blue);}
-.two{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;}
 
 /* SEMÁFORO */
-.semGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
+.semGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px;}
 .semCard{background:var(--card);border-radius:12px;padding:16px 18px;border-left:4px solid;}
 .semCard.v{border-color:#22c55e;}.semCard.a{border-color:#f59e0b;}.semCard.r{border-color:#f87171;}
 .sem-ic{font-size:18px;margin-bottom:6px;}.sem-t{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;}
@@ -116,7 +116,7 @@ input:checked+.ts:before{transform:translateX(20px);}
 .fn{font-size:11px;color:var(--muted);margin-top:20px;padding:12px 16px;background:var(--card);border:1px solid var(--border);border-radius:10px;line-height:1.8;}
 
 /* SCENARIO BUTTONS */
-.sc-wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:0;}
+.sc-wrap{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:0;}
 .sc-btn{background:var(--card);border:2px solid var(--border);border-radius:12px;padding:12px 16px;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:12px;transition:all .2s;text-align:left;width:100%;}
 .sc-btn:hover{border-color:var(--border2);}
 .sc-btn.on{border-color:var(--ac-indigo);background:rgba(99,102,241,.08);}
@@ -193,7 +193,7 @@ input:checked+.ts:before{transform:translateX(20px);}
 
 <!-- PAGE 1 -->
 <div id="p1" class="page">
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:0;" id="selectorRow">
+<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:14px;margin-bottom:0;" id="selectorRow">
   <!-- PAÍS -->
   <div>
     <div class="sh c-blue" style="margin-top:0;margin-bottom:10px;"><span class="sb">&#127968;</span> Pa&iacute;s</div>
@@ -234,7 +234,7 @@ input:checked+.ts:before{transform:translateX(20px);}
 
 <div class="sh c-cyan"><span class="sb">&#9881;</span> Parámetros del modelo</div>
 <!-- FILA 1 -->
-<div style="display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:12px;margin-bottom:12px;">
+<div style="display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) minmax(0,1fr);gap:12px;margin-bottom:12px;">
   <div class="card">
     <div class="card-t">Ingresos laborales e inmobiliarios</div>
     <div class="if" style="margin-bottom:14px;">
@@ -275,7 +275,7 @@ input:checked+.ts:before{transform:translateX(20px);}
   </div>
 </div>
 <!-- FILA 2 -->
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+<div style="display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:12px;margin-bottom:14px;">
   <div class="card">
     <div class="card-t">Activos</div>
     <div class="if" style="margin-bottom:10px;"><label>Inmobiliario</label><input class="ni" id="v_inm" value="730.000.000" data-raw="730000000"></div>
