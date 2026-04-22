@@ -2,7 +2,7 @@
 <html lang="es" data-theme="light">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=1200">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <title>&#127775; Planeación Financiera</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
@@ -123,15 +123,14 @@ input:checked+.ts:before{transform:translateX(20px);}
 .sc-icon{font-size:26px;line-height:1;flex-shrink:0;}
 .sc-name{font-size:13px;font-weight:600;color:var(--text);}
 .sc-sub{font-size:11px;color:var(--muted);margin-top:2px;}
-@media(max-width:768px){.sc-wrap{grid-template-columns:1fr!important;}}
+}
 
 /* P2 */
 .bkt-bar{height:6px;border-radius:3px;background:var(--border);overflow:hidden;margin-top:5px;}
 .bkt-fill{height:100%;border-radius:3px;background:var(--ac-blue);transition:width .3s;}
 
 /* RESPONSIVE */
-@media(max-width:768px){
-  header{padding:0 12px;height:auto;min-height:52px;flex-wrap:wrap;gap:8px;padding-top:10px;padding-bottom:10px;}
+
   .th1{font-size:13px;}.th2{display:none;}
   .nav-pills{order:10;width:100%;margin-top:2px;margin-bottom:4px;}
   .np{font-size:11px;padding:5px 10px;flex:1;text-align:center;}
@@ -169,8 +168,113 @@ input:checked+.ts:before{transform:translateX(20px);}
   .dPara{font-size:12px;}
   .recoList li{font-size:12px;}
 }
-@media(max-width:480px){.kgrid{grid-template-columns:1fr 1fr!important;}.kv{font-size:16px!important;}.ft{font-size:10px;}.ft td,.ft th{padding:5px 6px;}.np{font-size:10px;padding:4px 6px;}}
-@media(max-width:768px){.ni,.ei,input[type=number]{font-size:16px!important;}}
+.kv{font-size:16px!important;}.ft{font-size:10px;}.ft td,.ft th{padding:5px 6px;}.np{font-size:10px;padding:4px 6px;}}
+}
+
+/* ═══════════════ MOBILE ≤768px ═══════════════ */
+@media(max-width:768px){
+  /* Header */
+  header{padding:0 12px;height:auto;flex-wrap:wrap;padding-top:8px;padding-bottom:8px;gap:8px;}
+  .th1{font-size:15px!important;}
+  .author-line{display:none!important;}
+  .nav-pills{display:none;}
+  .tog-w span{font-size:11px;}
+
+  /* Page */
+  .page{padding:10px 10px 32px;}
+  .sh{font-size:10px;padding:8px 12px;margin:16px 0 10px;}
+
+  /* Selector row: stack vertically */
+  #selectorRow{grid-template-columns:1fr!important;}
+  .cs-btn{padding:8px 10px;}
+  .cs-flag{font-size:20px;}
+  .cs-name{font-size:12px;}
+  .cs-sub{font-size:10px;}
+  .sc-btn{padding:8px 10px;}
+  .sc-icon{font-size:20px;}
+  .sc-name{font-size:12px;}
+
+  /* Param rows: ALL single column */
+  div[style*="grid-template-columns:minmax(0,1.2fr) minmax(0,1fr) minmax(0,1fr)"],
+  div[style*="grid-template-columns:minmax(0,1fr) minmax(0,1fr)"],
+  div[style*="grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px"],
+  div[style*="grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px"],
+  div[style*="grid-template-columns:1fr 1fr;gap:8px;margin-top:8px"],
+  div[style*="grid-template-columns:1fr 1fr;gap:8px;"] {
+    grid-template-columns:1fr!important;
+  }
+
+  /* Salary row */
+  .sal-row{flex-wrap:wrap;gap:6px;}
+  .sal-v{min-width:auto;font-size:15px;}
+  .sal-row input[type=range]{width:100%;}
+
+  /* Cards */
+  .card{padding:12px 12px;border-radius:10px;}
+  .card-t{font-size:10px;margin-bottom:8px;}
+  .ni{font-size:16px!important;padding:8px 10px;}
+
+  /* Cuota display */
+  #lblCuota{font-size:18px!important;}
+  #lblPN{font-size:18px!important;}
+
+  /* KPI grid: 2 columns */
+  .kgrid{grid-template-columns:repeat(2,minmax(0,1fr))!important;gap:7px;}
+  .kv{font-size:15px!important;}
+  .kl{font-size:10px;}
+  .ks{font-size:10px;}
+
+  /* Expenses */
+  .egrid{grid-template-columns:1fr!important;}
+  .er{padding:7px 10px;}
+  .er label{font-size:11px;}
+  .ei{width:110px;font-size:16px!important;}
+
+  /* Total gastos bar */
+  div[style*="totalGastos"]{flex-wrap:wrap;gap:8px;}
+
+  /* Balance table: scroll */
+  .tw-wide{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+  .tw-wide .ft{min-width:400px;}
+  .ft{font-size:12px;}
+  .ft td,.ft th{padding:7px 10px;}
+
+  /* P&G + CF: stack */
+  .two{grid-template-columns:1fr!important;}
+
+  /* Semáforo: 1 column */
+  .semGrid{grid-template-columns:1fr!important;}
+  .semCard{padding:12px 14px;}
+  .sem-v{font-size:18px!important;}
+  .sem-d{font-size:11px;}
+
+  /* Diagnóstico */
+  .diagCard{padding:14px 14px;}
+  .dPara{font-size:12px;}
+  .recoList li{font-size:12px;}
+
+  /* Salary calculator two-col */
+  .two .sh{margin-top:16px;}
+}
+
+/* ═══════════════ MOBILE ≤480px ═══════════════ */
+@media(max-width:480px){
+  .page{padding:8px 8px 28px;}
+  .kgrid{grid-template-columns:repeat(2,minmax(0,1fr))!important;}
+  .kv{font-size:13px!important;}
+  .ft{font-size:11px;}
+  .ft td,.ft th{padding:5px 8px;}
+  .card{padding:10px 10px;}
+  .sh{font-size:9px;padding:7px 10px;}
+  .egrid{grid-template-columns:1fr!important;}
+  .semGrid{grid-template-columns:1fr!important;}
+}
+
+/* iOS zoom prevention */
+@media(max-width:768px){
+  .ni,.ei,input[type=number],input[type=range]{font-size:16px!important;}
+}
+
 </style>
 </head>
 <body>
