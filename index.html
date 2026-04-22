@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es" data-theme="dark">
+<html lang="es" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Estados Financieros del Hogar · 2025</title>
+<title>&#127775; Planeación Financiera</title>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
@@ -31,9 +31,19 @@ input:checked+.ts:before{transform:translateX(20px);}
 
 /* PAGE */
 .page{max-width:1100px;margin:0 auto;padding:24px 22px 48px;}
-.sh{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin:28px 0 14px;padding:8px 14px;border-radius:8px;background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.15);display:flex;align-items:center;gap:8px;}
+.sh{font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;margin:28px 0 14px;padding:10px 16px;border-radius:10px;display:flex;align-items:center;gap:9px;color:#fff;}
 .sh:first-child{margin-top:0;}
-.sb{background:var(--ac-blue);color:#fff;border-radius:6px;padding:3px 9px;font-size:10px;font-weight:700;}
+.sh.c-blue{background:linear-gradient(90deg,#1d4ed8,#3b82f6);box-shadow:0 2px 12px rgba(59,130,246,.3);}
+.sh.c-indigo{background:linear-gradient(90deg,#4338ca,#6366f1);box-shadow:0 2px 12px rgba(99,102,241,.3);}
+.sh.c-purple{background:linear-gradient(90deg,#7e22ce,#a855f7);box-shadow:0 2px 12px rgba(168,85,247,.3);}
+.sh.c-cyan{background:linear-gradient(90deg,#0e7490,#06b6d4);box-shadow:0 2px 12px rgba(6,182,212,.3);}
+.sh.c-amber{background:linear-gradient(90deg,#b45309,#f59e0b);box-shadow:0 2px 12px rgba(245,158,11,.3);}
+.sh.c-green{background:linear-gradient(90deg,#15803d,#22c55e);box-shadow:0 2px 12px rgba(34,197,94,.3);}
+.sh.c-orange{background:linear-gradient(90deg,#c2410c,#f97316);box-shadow:0 2px 12px rgba(249,115,22,.3);}
+.sh.c-teal{background:linear-gradient(90deg,#0f766e,#14b8a6);box-shadow:0 2px 12px rgba(20,184,166,.3);}
+.sh.c-rose{background:linear-gradient(90deg,#be123c,#f43f5e);box-shadow:0 2px 12px rgba(244,63,94,.3);}
+.sh span.note{font-size:10px;font-weight:400;text-transform:none;opacity:.85;margin-left:2px;}
+.sb{background:rgba(255,255,255,.22);color:#fff;border-radius:5px;padding:3px 9px;font-size:10px;font-weight:700;letter-spacing:.04em;}
 
 /* COUNTRY SELECTOR */
 .cs-wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;}
@@ -55,10 +65,10 @@ input:checked+.ts:before{transform:translateX(20px);}
 .sal-v{font-size:15px;font-weight:600;min-width:140px;text-align:right;color:var(--ac-cyan);}
 
 /* KPI */
-.kgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;}
-.kc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;}
+.kgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:8px;margin-bottom:14px;}
+.kc{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:11px 12px;}
 .kc.acc{border-color:var(--ac-blue);}
-.kl{font-size:11px;color:var(--muted);margin-bottom:4px;}.kv{font-size:22px;font-weight:600;}.ks{font-size:11px;color:var(--muted);margin-top:3px;}
+.kl{font-size:10px;color:var(--muted);margin-bottom:3px;}.kv{font-size:18px;font-weight:600;}.ks{font-size:10px;color:var(--muted);margin-top:2px;}
 
 /* TABLE */
 .tw{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
@@ -105,6 +115,16 @@ input:checked+.ts:before{transform:translateX(20px);}
 .recoList li:first-child{border-top:none;}
 .fn{font-size:11px;color:var(--muted);margin-top:20px;padding:12px 16px;background:var(--card);border:1px solid var(--border);border-radius:10px;line-height:1.8;}
 
+/* SCENARIO BUTTONS */
+.sc-wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:0;}
+.sc-btn{background:var(--card);border:2px solid var(--border);border-radius:12px;padding:12px 16px;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:12px;transition:all .2s;text-align:left;width:100%;}
+.sc-btn:hover{border-color:var(--border2);}
+.sc-btn.on{border-color:var(--ac-indigo);background:rgba(99,102,241,.08);}
+.sc-icon{font-size:26px;line-height:1;flex-shrink:0;}
+.sc-name{font-size:13px;font-weight:600;color:var(--text);}
+.sc-sub{font-size:11px;color:var(--muted);margin-top:2px;}
+@media(max-width:768px){.sc-wrap{grid-template-columns:1fr!important;}}
+
 /* P2 */
 .bkt-bar{height:6px;border-radius:3px;background:var(--border);overflow:hidden;margin-top:5px;}
 .bkt-fill{height:100%;border-radius:3px;background:var(--ac-blue);transition:width .3s;}
@@ -133,8 +153,8 @@ input:checked+.ts:before{transform:translateX(20px);}
   .card{padding:12px 14px;border-radius:10px;}
   .egrid{grid-template-columns:1fr!important;}
   .er label{font-size:11px;}.ei{width:120px;font-size:16px!important;}
-  .kgrid{grid-template-columns:1fr 1fr!important;gap:8px;}
-  .kv{font-size:18px!important;}
+  .kgrid{grid-template-columns:1fr 1fr!important;gap:6px;}
+  .kv{font-size:15px!important;}
   .tw-wide .ft{min-width:500px;}
   .ft{width:100%;font-size:11px;}
   .ft td,.ft th{padding:6px 8px;}
@@ -153,24 +173,19 @@ input:checked+.ts:before{transform:translateX(20px);}
 </head>
 <body>
 <header>
-  <div class="logo">3F</div>
-  <div><div class="th1">Estados Financieros del Hogar</div><div class="th2">Balance &middot; P&amp;G &middot; Flujo de Caja &middot; 2025</div></div>
-  <div class="sp"></div>
-  <div class="nav-pills">
-    <button class="np on" onclick="goPage(1,this)">&#128196; Hoja 1 &middot; Estados</button>
-    <button class="np" onclick="goPage(2,this)">&#128204; Hoja 2 &middot; Calculadoras</button>
-  </div>
+  <div class="logo" style="font-size:18px;background:linear-gradient(135deg,#6366f1,#3b82f6);">&#127775;</div>
+  <div><div class="th1">Planeaci&oacute;n Financiera</div><div class="th2">Balance &middot; P&amp;G &middot; Flujo de Caja &middot; An&aacute;lisis &middot; 2025</div></div>
   <div class="sp"></div>
   <div class="tog-w">
     <span>&#9728;</span>
-    <label class="tog"><input type="checkbox" id="themeToggle" checked><span class="ts"></span></label>
+    <label class="tog"><input type="checkbox" id="themeToggle"><span class="ts"></span></label>
     <span>&#127769;</span>
   </div>
 </header>
 
 <!-- PAGE 1 -->
 <div id="p1" class="page">
-<div class="sh" style="margin-top:0;"><span class="sb">&#127968;</span> Selecciona el hogar</div>
+<div class="sh c-blue" style="margin-top:0;"><span class="sb">&#127968;</span> Selecciona el hogar</div>
 <div class="cs-wrap">
   <button class="cs-btn on" onclick="switchCountry('co',this)">
     <span class="cs-flag">&#127464;&#127476;</span>
@@ -186,7 +201,32 @@ input:checked+.ts:before{transform:translateX(20px);}
   </button>
 </div>
 
-<div class="sh"><span class="sb">&#9881;</span> Par&aacute;metros del modelo</div>
+<div class="sh c-indigo"><span class="sb">&#127919;</span> Escenario de ingresos <span class="note">valores proporcionales entre sí</span></div>
+<div class="sc-wrap">
+  <button class="sc-btn" onclick="loadScenario('basico',this)">
+    <span class="sc-icon">&#127793;</span>
+    <div>
+      <div class="sc-name">Ingreso b&aacute;sico</div>
+      <div class="sc-sub">~$4.000.000 brutos &middot; Familia 3 personas</div>
+    </div>
+  </button>
+  <button class="sc-btn" onclick="loadScenario('medio',this)">
+    <span class="sc-icon">&#128202;</span>
+    <div>
+      <div class="sc-name">Ingreso medio</div>
+      <div class="sc-sub">~$8.000.000 brutos &middot; Familia 3 personas</div>
+    </div>
+  </button>
+  <button class="sc-btn on" onclick="loadScenario('alto',this)">
+    <span class="sc-icon">&#128176;</span>
+    <div>
+      <div class="sc-name">Ingreso medio-alto</div>
+      <div class="sc-sub">~$16.500.000 brutos &middot; Familia 3 personas</div>
+    </div>
+  </button>
+</div>
+
+<div class="sh c-cyan"><span class="sb">&#9881;</span> Parámetros del modelo</div>
 <!-- FILA 1 -->
 <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
   <div class="card">
@@ -204,7 +244,7 @@ input:checked+.ts:before{transform:translateX(20px);}
     <div class="card-t">Servicio de deuda</div>
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
       <div class="if"><label>Tasa EA (%)</label><input class="ni" id="v_tasa" value="12,00" data-raw="12"></div>
-      <div class="if"><label>Plazo restante (meses)</label><input class="ni" id="v_plazo" value="120" data-raw="120"></div>
+      <div class="if"><label>Plazo restante (meses)</label><input class="ni" id="v_plazo" value="60" data-raw="60"></div>
     </div>
     <div style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;">
       <div style="font-size:11px;color:var(--muted);margin-bottom:6px;">Cuota mensual calculada (sistema franc&eacute;s)</div>
@@ -218,8 +258,8 @@ input:checked+.ts:before{transform:translateX(20px);}
   <div class="card">
     <div class="card-t">Activos</div>
     <div class="if" style="margin-bottom:10px;"><label>Inmobiliario</label><input class="ni" id="v_inm" value="730.000.000" data-raw="730000000"></div>
-    <div class="if" style="margin-bottom:10px;"><label>Veh&iacute;culo</label><input class="ni" id="v_aut" value="60.000.000" data-raw="60000000"></div>
-    <div class="if"><label>Efectivo / ahorros</label><input class="ni" id="v_caj" value="20.000.000" data-raw="20000000"></div>
+    <div class="if" style="margin-bottom:10px;"><label>Veh&iacute;culo</label><input class="ni" id="v_aut" value="70.000.000" data-raw="70000000"></div>
+    <div class="if"><label>Efectivo / ahorros</label><input class="ni" id="v_caj" value="0" data-raw="0"></div>
   </div>
   <div class="card">
     <div class="card-t">Pasivos</div>
@@ -248,86 +288,69 @@ input:checked+.ts:before{transform:translateX(20px);}
   </div>
 </div>
 
-<div class="sh"><span class="sb">&#128248;</span> Gastos operativos del hogar &nbsp;<span style="font-size:11px;text-transform:none;font-weight:400;">(sin servicio de deuda &middot; editables)</span></div>
+<div class="sh c-orange"><span class="sb">&#128248;</span> Gastos operativos del hogar <span class="note">(sin servicio de deuda · editables)</span></div>
 <div class="egrid" id="expGrid"></div>
 
-<div class="sh"><span class="sb">&#9733;</span> Indicadores clave</div>
+<div class="sh c-green"><span class="sb">&#9733;</span> Indicadores clave</div>
 <div class="kgrid">
-  <div class="kc acc"><div class="kl">Patrimonio neto</div><div class="kv" id="kpi1">&#8212;</div><div class="ks" id="kpi1b">&#8212;</div></div>
+  <div class="kc acc">
+    <div class="kl">Patrimonio neto hoy</div>
+    <div class="kv" id="kpi1">&#8212;</div>
+    <div class="ks" id="kpi1b">&#8212;</div>
+    <div style="margin-top:7px;padding-top:7px;border-top:1px solid rgba(59,130,246,.2);display:flex;justify-content:space-between;align-items:flex-end;">
+      <div><div style="font-size:9px;color:var(--muted);">Mes 12</div><div style="font-size:12px;font-weight:600;color:var(--ac-cyan);" id="kpi1_m12">&#8212;</div></div>
+      <div style="text-align:right;"><div style="font-size:9px;color:var(--muted);">Variaci&oacute;n</div><div style="font-size:12px;font-weight:600;" id="kpi1_var">&#8212;</div></div>
+    </div>
+  </div>
   <div class="kc"><div class="kl">Surplus / d&eacute;ficit caja &middot; mes</div><div class="kv" id="kpi2">&#8212;</div><div class="ks" id="kpi2b">&#8212;</div></div>
   <div class="kc"><div class="kl">Cobertura deuda &middot; FCO / cuota</div><div class="kv" id="kpi3">&#8212;</div><div class="ks" id="kpi3b">&#8212;</div></div>
   <div class="kc"><div class="kl">Ratio deuda / activos</div><div class="kv" id="kpi4">&#8212;</div><div class="ks" id="kpi4b">&#8212;</div></div>
+  <div class="kc" style="border-top:2px solid var(--ac-orange);"><div class="kl">Gasto operativo &middot; mes</div><div class="kv" id="kpi5">&#8212;</div><div class="ks" id="kpi5b">&#8212;</div></div>
+  <div class="kc" style="border-top:2px solid var(--ac-purple);"><div class="kl">Amortizaci&oacute;n cr&eacute;dito &middot; a&ntilde;o</div><div class="kv" id="kpi6">&#8212;</div><div class="ks" id="kpi6b">&#8212;</div></div>
+  <div class="kc" style="border-top:2px solid var(--ac-red);"><div class="kl">Intereses pagados &middot; a&ntilde;o</div><div class="kv" id="kpi7">&#8212;</div><div class="ks" id="kpi7b">&#8212;</div></div>
 </div>
 
-<div class="sh"><span class="sb">1</span> Balance general del hogar</div>
+<div class="sh c-blue"><span class="sb">1</span> Balance general del hogar</div>
 <div class="tw tw-wide">
   <table class="ft">
-    <thead><tr><th style="width:40%;text-align:left;">Concepto</th><th>Mes 0</th><th class="hide-mob">Mes 6</th><th>Mes 12</th><th>Variaci&oacute;n anual</th></tr></thead>
+    <thead><tr><th style="width:40%;text-align:left;">Concepto</th><th>Mes 0</th><th>Mes 12</th><th>Variaci&oacute;n anual</th></tr></thead>
     <tbody id="balTbody"></tbody>
   </table>
 </div>
 <div class="two">
-  <div><div class="sh"><span class="sb">2</span> Estado de resultados &middot; mensual</div><div class="tw"><table class="ft"><tbody id="pyg"></tbody></table></div></div>
-  <div><div class="sh"><span class="sb">3</span> Flujo de caja &middot; mensual</div><div class="tw"><table class="ft"><tbody id="cf"></tbody></table></div></div>
+  <div><div class="sh c-indigo"><span class="sb">2</span> Estado de resultados · mensual</div><div class="tw"><table class="ft"><tbody id="pyg"></tbody></table></div></div>
+  <div><div class="sh c-teal"><span class="sb">3</span> Flujo de caja · mensual</div><div class="tw"><table class="ft"><tbody id="cf"></tbody></table></div></div>
 </div>
 
-<div class="sh"><span class="sb">&#128200;</span> An&aacute;lisis financiero &nbsp;<span style="font-size:11px;text-transform:none;font-weight:400;">sem&aacute;foro de salud financiera</span></div>
+<div class="sh c-purple"><span class="sb">&#128200;</span> Análisis financiero <span class="note">semáforo de salud financiera</span></div>
 <div class="semGrid" id="semGrid"></div>
 <div class="diagCard"><h3>&#128203; Diagn&oacute;stico en lenguaje simple</h3><div id="diagTxt"></div></div>
 <div class="diagCard"><h3>&#128161; Recomendaciones</h3><ul class="recoList" id="recoList"></ul></div>
 <div class="fn" id="fnNote"></div>
+
+<div class="sh c-amber"><span class="sb">&#128204;</span> Calculadora salarial <span class="note">cálculo del neto recibido</span></div>
+<div class="two">
+  <div>
+    <div class="sh c-cyan"><span class="sb">A</span> Desglose de descuentos</div>
+    <div class="tw"><table class="ft"><tbody id="calcSal"></tbody></table></div>
+  </div>
+  <div>
+    <div class="sh c-teal"><span class="sb">B</span> Tabla de tramos impositivos</div>
+    <div class="tw tw-wide"><table class="ft"><thead id="bktHead"><tr><th style="text-align:left;"># Tramo</th><th>Rango base</th><th>Tasa marginal</th><th>F&oacute;rmula</th><th>Estado</th></tr></thead><tbody id="bktTable"></tbody></table></div>
+  </div>
+</div>
 </div>
 
-<!-- PAGE 2 -->
-<div id="p2" class="page" style="display:none;">
-<div class="sh" style="margin-top:0;"><span class="sb">&#128204;</span> Anexo &middot; Calculadoras Salariales</div>
-<div class="cs-wrap">
-  <button class="cs-btn on" onclick="switchCountryP2('co',this)">
-    <span class="cs-flag">&#127464;&#127476;</span>
-    <div><div class="cs-name">Colombia</div><div class="cs-sub">COP &middot; Bogot&aacute;</div></div>
-  </button>
-  <button class="cs-btn" onclick="switchCountryP2('us',this)">
-    <span class="cs-flag">&#127482;&#127480;</span>
-    <div><div class="cs-name">Estados Unidos</div><div class="cs-sub">USD &middot; New Jersey</div></div>
-  </button>
-  <button class="cs-btn" onclick="switchCountryP2('eu',this)">
-    <span class="cs-flag">&#127466;&#127480;</span>
-    <div><div class="cs-name">Europa</div><div class="cs-sub">EUR &middot; Madrid</div></div>
-  </button>
-</div>
-<div class="card" style="margin-bottom:14px;">
-  <div class="card-t">Salario mensual bruto &mdash; mueve el slider</div>
-  <div class="sal-row"><input type="range" id="sl2" min="1423500" max="50000000" step="100000" value="16500000"><span class="sal-v" id="lbl2">$16.500.000</span></div>
-</div>
-<div class="kgrid" style="margin-bottom:14px;">
-  <div class="kc"><div class="kl">Salario bruto</div><div class="kv" style="color:var(--ac-cyan);" id="c2_br">&#8212;</div><div class="ks" id="c2_smlv">&#8212;</div></div>
-  <div class="kc"><div class="kl">Salario neto recibido</div><div class="kv" style="color:var(--ac-green);" id="c2_net">&#8212;</div><div class="ks" id="c2_netP">&#8212;</div></div>
-  <div class="kc"><div class="kl">Descuentos totales</div><div class="kv" style="color:var(--ac-red);" id="c2_des">&#8212;</div><div class="ks" id="c2_desP">&#8212;</div></div>
-  <div class="kc acc"><div class="kl">Costo real para la empresa</div><div class="kv" style="color:var(--ac-amber);" id="c2_cos">&#8212;</div><div class="ks" id="c2_cosX">&#8212;</div></div>
-</div>
-<div class="two">
-  <div><div class="sh"><span class="sb">A</span> Calculadora salarial &mdash; paso a paso</div><div class="tw"><table class="ft"><tbody id="calcSal"></tbody></table></div></div>
-  <div><div class="sh"><span class="sb">B</span> Costo real para la empresa</div><div class="tw"><table class="ft"><tbody id="calcEmp"></tbody></table></div></div>
-</div>
-<div class="sh" style="margin-top:24px;"><span class="sb">C</span> Tabla de tramos impositivos</div>
-<div class="tw tw-wide"><table class="ft"><thead><tr><th style="text-align:left;"># Tramo</th><th>Rango base</th><th>Tasa marginal</th><th>F&oacute;rmula</th><th>Estado</th></tr></thead><tbody id="bktTable"></tbody></table></div>
-<div class="fn" id="fn2Note"></div>
-</div>
+<!-- PAGE 2 (hidden, kept for legacy) -->
 
 <script>
 // ── PAGES ──
-function goPage(n,btn){
-  document.getElementById('p1').style.display=n===1?'':'none';
-  document.getElementById('p2').style.display=n===2?'':'none';
-  btn.parentElement.querySelectorAll('.np').forEach(function(b){b.classList.remove('on');});
-  btn.classList.add('on');
-  if(n===2)updateP2();
-}
+function goPage(n,btn){}
 // ── THEME ──
 var H=document.documentElement;
 document.getElementById('themeToggle').addEventListener('change',function(e){
   H.setAttribute('data-theme',e.target.checked?'dark':'light');
-  updateP1();if(document.getElementById('p2').style.display!=='none')updateP2();
+  updateP1();
 });
 
 // ── FORMAT ──
@@ -413,8 +436,8 @@ var BKTS={
 var CC={
   co:{sym:'$',name:'Colombia',flag:'&#127464;&#127476;',
     sMin:2e6,sMax:50e6,sDef:16.5e6,sStep:1e5,
-    defs:{renta:1.5e6,inm:730e6,aut:60e6,caj:20e6,deu:300e6,tasa:12,plazo:120,valori:5,depre:15},
-    exp:[{l:'Vivienda (arriendo, adm., servicios)',v:2900000},{l:'Transporte (seguro, gasolina, mant.)',v:550000},{l:'Alimentaci\u00f3n',v:1100000},{l:'Salud y educaci\u00f3n del hijo',v:1050000},{l:'Conectividad y suscripciones',v:360000},{l:'Personal, ocio y ahorro programado',v:700000}],
+    defs:{renta:1.5e6,inm:730e6,aut:70e6,caj:0,deu:300e6,tasa:12,plazo:60,valori:5,depre:15},
+    exp:[{l:'Vivienda (arriendo, adm., servicios)',v:3000000},{l:'Transporte (seguro, gasolina, mant.)',v:1000000},{l:'Alimentaci\u00f3n',v:1000000},{l:'Educaci\u00f3n del hijo',v:1000000},{l:'Salud',v:300000},{l:'Diversi\u00f3n y entretenimiento',v:1000000},{l:'Ahorro mensual',v:700000}],
     tax:calcCO,emp:empCO,
     note:'Retenci\u00f3n Art. 383 ET (Ley 2277/2022) \u00b7 UVT $49.799 \u00b7 SMMLV $1.423.500 \u00b7 Procedimiento 1 \u00b7 Con dependiente \u00b7 2025',
     smlvLabel:function(m){return (m/SMMLV).toFixed(2)+' SMMLV';},
@@ -422,8 +445,8 @@ var CC={
     bktUnit:'UVT'},
   us:{sym:'$',name:'EE.UU. (NJ)',flag:'&#127482;&#127480;',
     sMin:1000,sMax:25000,sDef:5000,sStep:100,
-    defs:{renta:500,inm:350000,aut:30000,caj:10000,deu:150000,tasa:7,plazo:360,valori:4,depre:15},
-    exp:[{l:'Vivienda (renta, seguros, servicios)',v:2200},{l:'Transporte (cuota, seguro, gasolina)',v:635},{l:'Alimentaci\u00f3n (mercado + restaurantes)',v:850},{l:'Salud (seguro m\u00e9dico, copagos)',v:380},{l:'Hijo (guarder\u00eda, ropa, actividades)',v:980},{l:'Personal, ocio y ahorro programado',v:450}],
+    defs:{renta:500,inm:350000,aut:30000,caj:0,deu:150000,tasa:7,plazo:360,valori:4,depre:15},
+    exp:[{l:'Vivienda (renta, seguros, servicios)',v:2200},{l:'Transporte (cuota, seguro, gasolina)',v:635},{l:'Alimentaci\u00f3n (mercado + restaurantes)',v:850},{l:'Educaci\u00f3n del hijo (guarder\u00eda, activ.)',v:980},{l:'Salud (seguro m\u00e9dico, copagos)',v:380},{l:'Ahorro mensual',v:450}],
     tax:calcUS,emp:empUS,
     note:'Impuesto federal + NJ state tax + FICA \u00b7 Filing: Single + 1 hijo \u00b7 Child Tax Credit $2.000 \u00b7 Deducci\u00f3n est\u00e1ndar $14.600 \u00b7 2024',
     smlvLabel:function(m){return '$'+(m*12).toLocaleString('en-US')+' / year';},
@@ -431,8 +454,8 @@ var CC={
     bktUnit:'USD anual'},
   eu:{sym:'\u20ac',name:'Espa\u00f1a (Madrid)',flag:'&#127466;&#127480;',
     sMin:1000,sMax:15000,sDef:3000,sStep:50,
-    defs:{renta:500,inm:280000,aut:20000,caj:8000,deu:120000,tasa:3.5,plazo:240,valori:4,depre:15},
-    exp:[{l:'Vivienda (alquiler, comunidad, suministros)',v:1380},{l:'Transporte (seguro, gasolina, mant.)',v:360},{l:'Alimentaci\u00f3n (compra + restaurantes)',v:750},{l:'Salud (dental, \u00f3ptica, copagos)',v:80},{l:'Educaci\u00f3n y actividades del hijo',v:210},{l:'Personal, ocio y ahorro programado',v:350}],
+    defs:{renta:500,inm:280000,aut:20000,caj:0,deu:120000,tasa:3.5,plazo:240,valori:4,depre:15},
+    exp:[{l:'Vivienda (alquiler, comunidad, suministros)',v:1380},{l:'Transporte (seguro, gasolina, mant.)',v:360},{l:'Alimentaci\u00f3n (compra + restaurantes)',v:750},{l:'Educaci\u00f3n y actividades del hijo',v:210},{l:'Salud (dental, \u00f3ptica, copagos)',v:80},{l:'Diversi\u00f3n y entretenimiento',v:150},{l:'Ahorro mensual',v:350}],
     tax:calcEU,emp:empEUf,
     note:'IRPF escala combinada Madrid \u00b7 SS empleado 6,35% \u00b7 M\u00ednimo personal+desc. \u20ac7.950 \u00b7 2024',
     smlvLabel:function(m){return '\u20ac'+(m*12).toLocaleString('es-ES')+' / a\u00f1o';},
@@ -445,28 +468,28 @@ function switchCountry(c,btn){
   CUR=c;
   btn.parentElement.querySelectorAll('.cs-btn').forEach(function(b){b.classList.remove('on');});
   btn.classList.add('on');
+  // Load the "alto" scenario for the new country
+  updateScenarioLabels();
+  var scBtns=document.querySelectorAll('.sc-btn');
+  scBtns.forEach(function(b){b.classList.remove('on');});
+  if(scBtns[2]){scBtns[2].classList.add('on');}
+  // Load alto scenario values for the new country
   var cfg=CC[c];
-  var sl=document.getElementById('sl1');
-  sl.min=cfg.sMin;sl.max=cfg.sMax;sl.step=cfg.sStep;sl.value=cfg.sDef;
-  // Reset param inputs
-  var D=cfg.defs;
-  function setNI(id,v,pct){var el=document.getElementById(id);if(!el)return;el.dataset.raw=v;el.value=fmtNI(v,pct);}
-  setNI('v_renta',D.renta,false);setNI('v_inm',D.inm,false);setNI('v_aut',D.aut,false);
-  setNI('v_caj',D.caj,false);setNI('v_deu',D.deu,false);
-  setNI('v_tasa',D.tasa,true);setNI('v_plazo',D.plazo,false);
-  setNI('v_valori',D.valori,true);setNI('v_depre',D.depre,true);
-  buildExp();updateP1();
+  var sc=SCENARIOS[c]&&SCENARIOS[c].alto;
+  if(sc&&cfg){
+    function _setNI(id,v,pct){var el=document.getElementById(id);if(!el)return;el.dataset.raw=v;el.value=fmtNI(v,pct);}
+    var sl=document.getElementById('sl1');sl.min=cfg.sMin;sl.max=cfg.sMax;sl.step=cfg.sStep;sl.value=sc.salary;
+    var lbl=document.getElementById('lbl1');if(lbl)lbl.textContent=cfg.sym+miles(sc.salary);
+    _setNI('v_renta',sc.renta,false);_setNI('v_inm',sc.inm,false);_setNI('v_aut',sc.aut,false);
+    _setNI('v_caj',sc.caj,false);_setNI('v_deu',sc.deu,false);
+    _setNI('v_tasa',sc.tasa,true);_setNI('v_plazo',sc.plazo,false);
+    _setNI('v_valori',sc.valori,true);_setNI('v_depre',sc.depre,true);
+    buildExp();
+    sc.exp.forEach(function(v,i){var el=document.getElementById('ee'+i);if(!el)return;el.dataset.raw=v;el.value=fmtNI(v,false);});
+  }
+  updateP1();
 }
-function switchCountryP2(c,btn){
-  CUR2=c;
-  btn.parentElement.querySelectorAll('.cs-btn').forEach(function(b){b.classList.remove('on');});
-  btn.classList.add('on');
-  var cfg=CC[c];
-  var sl=document.getElementById('sl2');
-  sl.min=cfg.sMin;sl.max=cfg.sMax;sl.step=cfg.sStep;sl.value=cfg.sDef;
-  document.getElementById('lbl2').textContent=cfg.sym+miles(cfg.sDef);
-  updateP2();
-}
+
 
 function calcDebt(b,ea,n){
   if(b<=0||n<=0)return{pmt:0,int:0,prin:0};
@@ -479,7 +502,12 @@ var EXP_ELS=[];
 function buildExp(){
   var cfg=CC[CUR],g=document.getElementById('expGrid'),h='';
   cfg.exp.forEach(function(e,i){
-    h+='<div class="er"><label>'+e.l+'</label><input class="ei" id="ee'+i+'" value="'+fmtNI(e.v,false)+'" data-raw="'+e.v+'"></div>';
+    var isAhorro=(i===cfg.exp.length-1);
+    var style=isAhorro?'background:rgba(34,197,94,.07);border-color:rgba(34,197,94,.3);':'';
+    var labelStyle=isAhorro?'color:var(--ac-green);font-weight:600;':'';
+    var inputStyle=isAhorro?'border-color:rgba(34,197,94,.4);color:var(--ac-green);font-weight:600;':'';
+    var badge=isAhorro?'<span style="font-size:10px;background:rgba(34,197,94,.15);color:var(--ac-green);border-radius:4px;padding:1px 6px;margin-left:6px;">\u2192 activos</span>':'';
+    h+='<div class="er" style="'+style+'"><label style="'+labelStyle+'">'+e.l+badge+'</label><input class="ei" id="ee'+i+'" value="'+fmtNI(e.v,false)+'" data-raw="'+e.v+'" style="'+inputStyle+'"></div>';
   });
   g.innerHTML=h;
   cfg.exp.forEach(function(e,i){
@@ -490,9 +518,20 @@ function buildExp(){
   });
 }
 function getExp(){
+  // Returns only operational expenses (excludes last item = ahorro)
   var cfg=CC[CUR],t=0;
-  cfg.exp.forEach(function(e,i){var el=document.getElementById('ee'+i);t+=(el?parseNI(el.dataset.raw||el.value):e.v)||0;});
+  cfg.exp.forEach(function(e,i){
+    if(i===cfg.exp.length-1)return; // skip ahorro
+    var el=document.getElementById('ee'+i);
+    t+=(el?parseNI(el.dataset.raw||el.value):e.v)||0;
+  });
   return t;
+}
+function getAhorro(){
+  var cfg=CC[CUR];
+  var i=cfg.exp.length-1;
+  var el=document.getElementById('ee'+i);
+  return (el?parseNI(el.dataset.raw||el.value):cfg.exp[i].v)||0;
 }
 
 // ── PAGE 1 ──
@@ -502,15 +541,26 @@ function updateP1(){
   document.getElementById('lbl1').textContent=cfg.sym+miles(m);
   var renta=gR('v_renta'),inm0=gR('v_inm'),aut0=gR('v_aut'),caj0=gR('v_caj');
   var deu0=gR('v_deu'),tasa=gR('v_tasa'),plazo=gR('v_plazo');
-  var valori=gR('v_valori'),depre=gR('v_depre'),exp=getExp();
+  var valori=gR('v_valori'),depre=gR('v_depre'),exp=getExp(),ahorro=getAhorro();
   var tax=cfg.tax(m),net=tax.net,debt=calcDebt(deu0,tasa,plazo);
   var apM=inm0*(valori/100)/12,dpM=aut0*(depre/100)/12;
-  var ingT=net+renta,uaiida=ingT-exp,resN=uaiida-debt.int-dpM;
-  var fco=ingT-exp,fcf=-debt.pmt,varC=fco+fcf;
+  var ingT=net+renta;
+  var fco=ingT-exp;           // FCO: ingresos menos gastos operativos
+  var fci=-ahorro;            // FCI: ahorro sale de caja y entra a activos
+  var fcf=-debt.pmt;          // FCF: servicio de la deuda
+  var varCaja=fco+fci+fcf;   // variación neta de efectivo líquido
+  var uaiida=ingT-exp,resN=uaiida-debt.int-dpM;
   var actT=caj0+inm0+aut0,pasT=deu0,patN=actT-pasT;
-  var cM=caj0,iM=inm0,aM=aut0,dM=deu0;
-  var pr=[{a:actT,p:deu0,pat:patN,c:caj0}];
-  for(var i=1;i<=12;i++){var db=calcDebt(dM,tasa,Math.max(1,plazo-i+1));cM+=fco-db.pmt;iM+=apM;aM=Math.max(0,aM-dpM);dM=Math.max(0,dM-db.prin);var a=cM+iM+aM;pr.push({a:a,p:dM,pat:a-dM,c:cM});}
+  var cM=caj0,iM=inm0,aM=aut0,dM=deu0,savM=0;
+  var pr=[{a:actT,p:deu0,pat:patN,c:caj0,s:0}];
+  for(var i=1;i<=12;i++){
+    var db=calcDebt(dM,tasa,Math.max(1,plazo-i+1));
+    cM+=fco-db.pmt+fci;   // liquid cash: FCO + FCI(negative) + FCF
+    savM+=ahorro;           // savings pool accumulates
+    iM+=apM; aM=Math.max(0,aM-dpM); dM=Math.max(0,dM-db.prin);
+    var a=cM+savM+iM+aM;
+    pr.push({a:a,p:dM,pat:a-dM,c:cM,s:savM});
+  }
   var p6=pr[6],p12=pr[12];
 
   document.getElementById('lblCuota').textContent=fmt(debt.pmt)+'/mes';
@@ -522,39 +572,66 @@ function updateP1(){
 
   function set(id,v,c,sub,sc){var el=document.getElementById(id);if(!el)return;el.textContent=v;if(c)el.style.color=c;var sb=document.getElementById(id+'b');if(sb){sb.textContent=sub||'';if(sc)sb.style.color=sc;}}
   set('kpi1',fmt(patN),'var(--ac-cyan)',fmtP(patN/actT)+' de los activos','');
-  set('kpi2',fmt(varC)+'/mes',cS(varC),varC>=0?'super\u00e1vit de caja':'d\u00e9ficit de caja',cS(varC));
+  var kpi1m12=document.getElementById('kpi1_m12');
+  var kpi1var=document.getElementById('kpi1_var');
+  if(kpi1m12) kpi1m12.textContent=fmt(p12.pat);
+  if(kpi1var){
+    var patVar=p12.pat-patN;
+    kpi1var.textContent=sgn(patVar)+fmt(patVar)+' ('+fmtP(patVar/Math.abs(patN))+')';
+    kpi1var.style.color=patVar>=0?'var(--ac-green)':'var(--ac-red)';
+  }
+  set('kpi2',fmt(varCaja)+'/mes',cS(varCaja),varCaja>=0?'super\u00e1vit de caja':'d\u00e9ficit de caja',cS(varCaja));
   var cob=debt.pmt>0?fco/debt.pmt:99;
   set('kpi3',cob.toFixed(2)+'x',cob>=1.2?'var(--ac-green)':cob>=1?'var(--ac-amber)':'var(--ac-red)',cob>=1.2?'holgado (\u22651.2x)':cob>=1?'ajustado':'insuficiente','');
   var lev=actT>0?pasT/actT:0;
   set('kpi4',fmtP(lev),lev<=0.4?'var(--ac-green)':lev<=0.6?'var(--ac-amber)':'var(--ac-red)',lev<=0.4?'bajo (\u226440%)':lev<=0.6?'moderado':'elevado','');
+  // KPI 5: gasto operativo mensual (excl. ahorro)
+  var totalGasto=exp;
+  set('kpi5',fmt(totalGasto),'var(--ac-orange)',fmtP(totalGasto/ingT)+' del ingreso neto','');
+  // KPI 6: amortización crédito anual (capital pagado en 12 meses)
+  var amorAnual=0,dTemp=deu0;
+  for(var mm=1;mm<=12;mm++){var dbTemp=calcDebt(dTemp,tasa,Math.max(1,plazo-mm+1));amorAnual+=dbTemp.prin;dTemp=Math.max(0,dTemp-dbTemp.prin);}
+  set('kpi6',fmt(amorAnual),'var(--ac-purple)',fmt(deu0-dTemp)+' saldo a final de a\u00f1o','');
+  // KPI 7: intereses anuales
+  var intAnual=debt.int*12;
+  set('kpi7',fmt(intAnual),'var(--ac-red)',fmtP(intAnual/(ingT*12))+' del ingreso anual','');
 
-  function bR(lbl,m0,m6,m12,cls){
+  function bR(lbl,m0,m12,cls){
     var d=m12-m0,dC=d===0?'':'style="color:'+(d>0?'var(--ac-green)':'var(--ac-red)')+'"';
-    return '<tr class="'+(cls||'')+'"><td>'+lbl+'</td><td class="num">'+fmt(m0)+'</td><td class="num hide-mob">'+fmt(m6)+'</td><td class="num">'+fmt(m12)+'</td><td class="num" '+dC+'>'+(d===0?'\u2014':sgn(d)+fmt(d))+'</td></tr>';
+    return '<tr class="'+(cls||'')+'"><td>'+lbl+'</td><td class="num">'+fmt(m0)+'</td><td class="num">'+fmt(m12)+'</td><td class="num" '+dC+'>'+(d===0?'\u2014':sgn(d)+fmt(d))+'</td></tr>';
   }
   document.getElementById('balTbody').innerHTML=
-    '<tr class="grp"><td colspan="5">ACTIVOS</td></tr>'+bR('Efectivo y equivalentes',caj0,p6.c,p12.c,'')+bR('Inversiones inmobiliarias',inm0,inm0+apM*6,inm0+apM*12,'')+bR('Veh\u00edculo (neto depr.)',aut0,Math.max(0,aut0-dpM*6),Math.max(0,aut0-dpM*12),'')+bR('Total Activos',actT,p6.a,p12.a,'tot')+
-    '<tr class="grp"><td colspan="5">PASIVOS</td></tr>'+bR('Deuda financiera',deu0,p6.p,p12.p,'')+bR('Total Pasivos',pasT,p6.p,p12.p,'tot')+
-    '<tr class="grp"><td colspan="5">PATRIMONIO</td></tr>'+bR('Capital y resultados acumulados',patN,p6.pat,p12.pat,'')+bR('Total Pasivos + Patrimonio',actT,p6.a,p12.a,'tot');
+    '<tr class="grp"><td colspan="4">ACTIVOS</td></tr>'+
+    bR('Efectivo y equivalentes',caj0,p12.c,'')+
+    bR('Ahorros e inversiones acumulados',0,p12.s,'')+
+    bR('Inversiones inmobiliarias',inm0,inm0+apM*12,'')+
+    bR('Veh\u00edculo (neto depr.)',aut0,Math.max(0,aut0-dpM*12),'')+
+    bR('Total Activos',actT,p12.a,'tot')+
+    '<tr class="grp"><td colspan="4">PASIVOS</td></tr>'+bR('Deuda financiera',deu0,p12.p,'')+bR('Total Pasivos',pasT,p12.p,'tot')+
+    '<tr class="grp"><td colspan="4">PATRIMONIO</td></tr>'+bR('Capital y resultados acumulados',patN,p12.pat,'')+bR('Total Pasivos + Patrimonio',actT,p12.a,'tot');
 
   function pR(l,v,cls,par){var dv=(par&&v<0)?'('+fmt(v)+')':fmt(v);var col=(cls==='tot')?'style="color:'+cS(v)+'"':(cls==='tot2')?'style="color:'+(v>=0?'var(--ac-cyan)':'var(--ac-red)')+'"':'';return '<tr class="'+(cls||'')+'"><td>'+l+'</td><td class="num" '+(col||'')+'>'+dv+'</td></tr>';}
-  var er='';cfg.exp.forEach(function(e,i){var el=document.getElementById('ee'+i),v=el?parseNI(el.dataset.raw||el.value):e.v;er+=pR('(\u2212) '+e.l,-v,'',true);});
+  var er='';cfg.exp.forEach(function(e,i){
+    if(i===cfg.exp.length-1)return; // ahorro shown separately
+    var el=document.getElementById('ee'+i),v=el?parseNI(el.dataset.raw||el.value):e.v;er+=pR('(\u2212) '+e.l,-v,'',true);
+  });
   document.getElementById('pyg').innerHTML=
     '<tr class="grp"><td colspan="2">INGRESOS</td></tr>'+pR('(+) Salario neto (post imp. y SS)',net,'',false)+pR('(+) Renta inmobiliaria',renta,'',false)+pR('= Total ingresos',ingT,'tot2',false)+
     '<tr class="grp"><td colspan="2">GASTOS DEL HOGAR</td></tr>'+er+pR('= Utilidad operativa (UAIIDA)',uaiida,'tot2',false)+
+    '<tr class="grp"><td colspan="2">DESTINADO A INVERSI\u00d3N</td></tr>'+pR('(+) Ahorro mensual \u2192 activos',ahorro,'',false)+
     '<tr class="grp"><td colspan="2">CARGOS NO OPERATIVOS</td></tr>'+pR('(\u2212) Intereses deuda',-debt.int,'',true)+pR('(\u2212) Depreciaci\u00f3n veh\u00edculo',-dpM,'',true)+
     pR('= Resultado neto del per\u00edodo',resN,'tot',false)+'<tr class="memo"><td colspan="2">\u25aa Memo: valorizaci\u00f3n inmob. '+fmt(apM)+' (no caja)</td></tr>';
 
   function cR(l,v,cls,ind){var col=(cls==='tot')?'style="color:'+cS(v)+'"':(cls==='tot2')?'style="color:'+(v>=0?'var(--ac-cyan)':'var(--ac-red)')+'"':'';var iS=ind?'style="padding-left:24px;font-size:12px;color:var(--muted);"':'';return '<tr class="'+(cls||'')+'"><td '+(iS||'')+'>'+l+'</td><td class="num" '+(col||'')+'>'+(v<0?'('+fmt(v)+')':fmt(v))+'</td></tr>';}
   document.getElementById('cf').innerHTML=
     '<tr class="grp"><td colspan="2">OPERATIVO (FCO)</td></tr>'+cR('(+) Salario neto recibido',net,'',false)+cR('(+) Renta cobrada',renta,'',false)+cR('(\u2212) Gastos operativos',-exp,'',false)+cR('= FCO',fco,'tot2',false)+
-    '<tr class="grp"><td colspan="2">INVERSI\u00d3N (FCI)</td></tr>'+cR('(\u00b1) Compra / venta activos',0,'',false)+cR('= FCI',0,'tot2',false)+
+    '<tr class="grp"><td colspan="2">INVERSI\u00d3N (FCI)</td></tr>'+cR('(\u2212) Ahorro mensual destinado a activos',-ahorro,'',false)+cR('= FCI (ahorro programado)',fci,'tot2',false)+
     '<tr class="grp"><td colspan="2">FINANCIACI\u00d3N (FCF)</td></tr>'+cR('(\u2212) Cuota total deuda',-debt.pmt,'',false)+cR('\u2192 Capital amortizado',-debt.prin,'',true)+cR('\u2192 Intereses pagados',-debt.int,'',true)+cR('= FCF',fcf,'tot2',false)+
-    '<tr class="grp"><td colspan="2">VARIACI\u00d3N DE CAJA</td></tr>'+cR('Caja apertura',caj0,'',false)+cR('\u25b6 Variaci\u00f3n neta',varC,'tot',false)+cR('\u25b6 Caja al cierre',caj0+varC,'tot',false)+
-    '<tr class="memo"><td colspan="2">Memo no caja: Val.+'+fmt(apM)+' | Depr.('+fmt(dpM)+') | \u0394Patrim.'+sgn(varC+apM-dpM)+fmt(Math.abs(varC+apM-dpM))+'</td></tr>';
+    '<tr class="grp"><td colspan="2">VARIACI\u00d3N DE CAJA</td></tr>'+cR('Caja apertura',caj0,'',false)+cR('\u25b6 Variaci\u00f3n neta caja l\u00edquida',varCaja,'tot',false)+cR('\u25b6 Caja l\u00edquida al cierre',caj0+varCaja,'tot',false)+
+    '<tr class="memo"><td colspan="2">Memo no caja: Val.+'+fmt(apM)+' | Depr.('+fmt(dpM)+') | \u0394Patrim.'+sgn(varCaja+ahorro+apM-dpM)+fmt(Math.abs(varCaja+ahorro+apM-dpM))+'</td></tr>';
 
   // ANÁLISIS
-  var tasaAh=m>0?varC/m:0,mesEm=exp>0?caj0/exp:0,dti=ingT>0?debt.pmt/ingT:0;
+  var tasaAh=m>0?ahorro/m:0,mesEm=exp>0?(caj0+p6.s/2)/exp:0,dti=ingT>0?debt.pmt/ingT:0;
   var crecPat=patN>0?(p12.pat-patN)/patN:0,levR=actT>0?pasT/actT:0;
   function c3(v,g,a){return v>=g?'v':v>=a?'a':'r';}
   function c3i(v,r,a){return v<=r?'v':v<=a?'a':'r';}
@@ -574,7 +651,7 @@ function updateP1(){
   var tit=ov==='v'?'&#127881; Salud financiera s\u00f3lida':ov==='a'?'&#9889; Finanzas estables con margen de mejora':'&#9888;&#65039; Puntos cr\u00edticos a atender';
   var est=ov==='v'?'<span class="tag g">BUENA SALUD</span>':ov==='a'?'<span class="tag a">ESTABLE</span>':'<span class="tag r">ATENCI\u00d3N</span>';
   var txt='<div class="dPara">'+est+' &nbsp;Con un salario de <strong>'+fmt(m)+'</strong> el hogar recibe <strong>'+fmt(net)+'</strong> netos. Con la renta inmobiliaria, el ingreso total es <strong>'+fmt(ingT)+'</strong>/mes.</div>';
-  txt+='<div class="dPara">Gastos corrientes <strong>'+fmt(exp)+'</strong> + cuota deuda <strong>'+fmt(debt.pmt)+'</strong> = <strong>'+fmt(exp+debt.pmt)+'</strong> total. Queda <strong>'+(varC>=0?'un super\u00e1vit de '+fmt(varC):'un d\u00e9ficit de '+fmt(Math.abs(varC)))+'</strong>/mes.</div>';
+  txt+='<div class="dPara">Gastos corrientes <strong>'+fmt(exp)+'</strong> + cuota deuda <strong>'+fmt(debt.pmt)+'</strong> = <strong>'+fmt(exp+debt.pmt)+'</strong> total. Queda <strong>'+(varCaja>=0?'un super\u00e1vit de caja l\u00edquido de '+fmt(varCaja):'un d\u00e9ficit de caja de '+fmt(Math.abs(varCaja)))+'</strong>/mes.</div>';
   txt+='<div class="dPara">Patrimonio neto hoy: <strong>'+fmt(patN)+'</strong>. En 12 meses proyecta <strong>'+fmt(p12.pat)+'</strong> (+<strong>'+fmtP(crecPat)+'</strong>). Deuda: <strong>'+fmtP(levR)+'</strong> de activos \u2014 nivel <strong>'+(levC==='v'?'conservador':levC==='a'?'moderado':'alto')+'</strong>.</div>';
   document.getElementById('diagTxt').innerHTML=txt;
 
@@ -587,67 +664,184 @@ function updateP1(){
   if(levC==='v')recos.push({i:'&#9878;&#65039;',t:'<strong>Aprovechar capacidad de cr\u00e9dito:</strong> Con endeudamiento del '+fmtP(levR)+' tienes margen para acceder a cr\u00e9dito favorable si surge oportunidad de inversi\u00f3n.'});
   document.getElementById('recoList').innerHTML=recos.map(function(r){return '<li><span style="flex-shrink:0;font-size:14px;">'+r.i+'</span><span>'+r.t+'</span></li>';}).join('');
   document.getElementById('fnNote').textContent=cfg.note;
+  updateCalc(m,tax);
 }
 
-// ── PAGE 2 ──
-function updateP2(){
-  var cfg=CC[CUR2];
-  var m=+document.getElementById('sl2').value;
-  document.getElementById('lbl2').textContent=cfg.sym+miles(m);
-  var tax=cfg.tax(m);
-  var emp=cfg.emp(m);
-  function fmt2(v){var sym=CC[CUR2].sym;return sym+miles(v);}
-  document.getElementById('c2_br').textContent=fmt2(m);
-  document.getElementById('c2_smlv').textContent=cfg.smlvLabel(m);
-  document.getElementById('c2_net').textContent=fmt2(tax.net);
-  document.getElementById('c2_netP').textContent=fmtP(tax.net/m)+' del bruto';
-  document.getElementById('c2_des').textContent=fmt2(tax.ret+tax.mand);
-  document.getElementById('c2_desP').textContent=fmtP((tax.ret+tax.mand)/m)+' del bruto';
-  document.getElementById('c2_cos').textContent=fmt2(emp.total);
-  document.getElementById('c2_cosX').textContent=(emp.total/m).toFixed(2)+'x el salario bruto';
+// ── SALARY CALC (inline in P1) ──
+function updateCalc(m, tax){
+  var cfg=CC[CUR];
+  function fmt2(v){return cfg.sym+miles(v);}
   function sR(l,v,cls,par){var dv=(par&&v<0)?'('+fmt2(v)+')':fmt2(v);var col=(cls==='tot')?'style="color:'+(v>=0?'var(--ac-green)':'var(--ac-red)')+'"':(cls==='tot2')?'style="color:'+(v>=0?'var(--ac-cyan)':'var(--ac-red)')+'"':'';return '<tr class="'+(cls||'')+'"><td>'+l+'</td><td class="num" '+(col||'')+'>'+dv+'</td></tr>';}
-
   var calRows='';
-  if(CUR2==='co'){
-    calRows='<tr class="grp"><td colspan="2">DEDUCCIONES OBLIGATORIAS</td></tr>'+sR('Salario bruto',m,'',false)+sR('(\u2212) Salud empleado (4%)',-tax.sal,'',true)+sR('(\u2212) Pensi\u00f3n empleado (4%)',-tax.pen,'',true)+sR('(\u2212) Fondo solidaridad ('+fmtP(tax.sr)+')',-tax.sol,'',true)+sR('= Neto base exenciones',tax.n0,'tot2',false)+'<tr class="grp"><td colspan="2">C\u00c1LCULO BASE GRAVABLE</td></tr>'+sR('(\u2212) Renta exenta 25% (tope 20 UVT)',-tax.ex25,'',true)+sR('(\u2212) Deducci\u00f3n dependiente 10% (tope 32 UVT)',-tax.dep,'',true)+sR('= Base gravable',tax.base,'tot2',false)+'<tr><td style="padding-left:22px;font-size:12px;color:var(--muted);">En UVT (/ $49.799)</td><td class="num" style="font-size:12px;color:var(--muted);">'+tax.buvt.toFixed(2)+' UVT</td></tr><tr class="grp"><td colspan="2">RETENCI\u00d3N Y RESULTADO</td></tr>'+sR('Retenci\u00f3n en la fuente',-tax.ret,'',true)+'<tr><td style="padding-left:22px;font-size:12px;color:var(--muted);">En UVT</td><td class="num" style="font-size:12px;color:var(--muted);">'+tax.ruvt.toFixed(2)+' UVT</td></tr>'+sR('= Salario NETO a recibir',tax.net,'tot',false);
-  } else if(CUR2==='us'){
-    calRows='<tr class="grp"><td colspan="2">RETENCIONES FEDERALES</td></tr>'+sR('Salario bruto',m,'',false)+sR('(\u2212) Federal income tax',-tax.fedTax,'',true)+sR('(\u2212) Child Tax Credit aplicado (mensual)',Math.min(tax.fedTax,2000/12),'',true)+'<tr class="grp"><td colspan="2">FICA \u2014 SEGURO SOCIAL</td></tr>'+sR('(\u2212) Social Security (6.2%)',-tax.ss,'',true)+sR('(\u2212) Medicare (1.45%)',-tax.med,'',true)+'<tr class="grp"><td colspan="2">NEW JERSEY STATE</td></tr>'+sR('(\u2212) NJ income tax',-tax.njT,'',true)+'<tr class="grp"><td colspan="2">RESULTADO</td></tr>'+sR('= Salario NETO (take-home)',tax.net,'tot',false);
+  if(CUR==='co'){
+    calRows='<tr class="grp"><td colspan="2">DEDUCCIONES OBLIGATORIAS</td></tr>'+sR('Salario bruto',m,'',false)+sR('(−) Salud empleado (4%)',-tax.sal,'',true)+sR('(−) Pensión empleado (4%)',-tax.pen,'',true)+sR('(−) Fondo solidaridad ('+fmtP(tax.sr)+')',-tax.sol,'',true)+sR('= Neto base exenciones',tax.n0,'tot2',false)+'<tr class="grp"><td colspan="2">CÁLCULO BASE GRAVABLE</td></tr>'+sR('(−) Renta exenta 25% (tope 20 UVT)',-tax.ex25,'',true)+sR('(−) Deducción dependiente 10% (tope 32 UVT)',-tax.dep,'',true)+sR('= Base gravable',tax.base,'tot2',false)+'<tr><td style="padding-left:22px;font-size:12px;color:var(--muted);">En UVT (/ $49.799)</td><td class="num" style="font-size:12px;color:var(--muted);">'+tax.buvt.toFixed(2)+' UVT</td></tr><tr class="grp"><td colspan="2">RETENCIÓN Y RESULTADO</td></tr>'+sR('Retención en la fuente',-tax.ret,'',true)+'<tr><td style="padding-left:22px;font-size:12px;color:var(--muted);">En UVT</td><td class="num" style="font-size:12px;color:var(--muted);">'+tax.ruvt.toFixed(2)+' UVT</td></tr>'+sR('= Salario NETO a recibir',tax.net,'tot',false);
+  } else if(CUR==='us'){
+    calRows='<tr class="grp"><td colspan="2">IMPUESTO FEDERAL</td></tr>'+sR('Salario bruto mensual',m,'',false)+sR('(−) Federal income tax',-tax.fedTax,'',true)+sR('(−) Child Tax Credit (prorr.)',Math.min(2000/12,tax.fedTax),'',true)+'<tr class="grp"><td colspan="2">FICA — SEGURIDAD SOCIAL</td></tr>'+sR('(−) Social Security (6.2%)',-tax.ss,'',true)+sR('(−) Medicare (1.45%)',-tax.med,'',true)+'<tr class="grp"><td colspan="2">NEW JERSEY STATE TAX</td></tr>'+sR('(−) NJ income tax + SDI/FLI',-tax.njT,'',true)+'<tr class="grp"><td colspan="2">RESULTADO</td></tr>'+sR('= Take-home mensual (neto)',tax.net,'tot',false);
   } else {
-    calRows='<tr class="grp"><td colspan="2">SEGURIDAD SOCIAL EMPLEADO</td></tr>'+sR('Salario bruto',m,'',false)+sR('(\u2212) SS empleado (6.35%)',-tax.ss,'',true)+sR('(\u2212) SS empleado + otros gastos',-tax.mand,'',true)+'<tr class="grp"><td colspan="2">IRPF</td></tr>'+sR('= Base imponible',tax.base,'tot2',false)+sR('(\u2212) Retenci\u00f3n mensual IRPF',-tax.irpf,'',true)+'<tr class="grp"><td colspan="2">RESULTADO</td></tr>'+sR('= Salario NETO a recibir',tax.net,'tot',false);
+    calRows='<tr class="grp"><td colspan="2">SEGURIDAD SOCIAL EMPLEADO</td></tr>'+sR('Salario bruto mensual',m,'',false)+sR('(−) Cotización SS (6.35%)',-tax.ss,'',true)+'<tr class="grp"><td colspan="2">IRPF (RETENCIÓN)</td></tr>'+sR('= Rendimiento neto trabajo',tax.rendN,'tot2',false)+sR('(−) Reducción rendimientos',-tax.redR,'',true)+sR('= Base imponible anual',tax.base,'tot2',false)+sR('(−) Retención mensual IRPF',-tax.irpf,'',true)+'<tr class="grp"><td colspan="2">RESULTADO</td></tr>'+sR('= Salario NETO a recibir',tax.net,'tot',false);
   }
-  document.getElementById('calcSal').innerHTML=calRows;
+  var cSalEl=document.getElementById('calcSal');if(cSalEl)cSalEl.innerHTML=calRows;
 
-  var empRows='<tr class="grp"><td colspan="2">SALARIO BRUTO</td></tr>'+sR('Salario bruto empleado',m,'',false)+'<tr class="grp"><td colspan="2">CARGAS DEL EMPLEADOR</td></tr>';
-  emp.items.forEach(function(it){empRows+=sR('+ '+it[0],it[1],'',false);});
-  empRows+=sR('= Costo total empresa / mes',emp.total,'tot',false);
-  document.getElementById('calcEmp').innerHTML=empRows;
-
-  // Brackets
-  var bkts=BKTS[CUR2];
+  var bkts=BKTS[CUR];
   var activeIdx=-1;
-  if(CUR2==='co'){var buvt=tax.buvt||0;bkts.forEach(function(b,i){if(buvt>b.lo&&buvt<=b.hi)activeIdx=i;});if(activeIdx===-1&&buvt<=95)activeIdx=0;}
-  else if(CUR2==='us'){var ann=m*12,fedT=Math.max(0,ann-14600);bkts.forEach(function(b,i){if(fedT>b.lo&&fedT<=b.hi)activeIdx=i;});}
+  if(CUR==='co'){var buvt=tax.buvt||0;bkts.forEach(function(b,i){if(buvt>b.lo&&buvt<=b.hi)activeIdx=i;});if(activeIdx===-1&&buvt<=95)activeIdx=0;}
+  else if(CUR==='us'){var ann=m*12,fedT=Math.max(0,ann-14600);bkts.forEach(function(b,i){if(fedT>b.lo&&fedT<=b.hi)activeIdx=i;});}
   else{bkts.forEach(function(b,i){if(tax.base>b.lo&&tax.base<=b.hi)activeIdx=i;});}
-  document.getElementById('bktTable').innerHTML=bkts.map(function(b,i){
+  var bktEl=document.getElementById('bktTable');
+  if(bktEl)bktEl.innerHTML=bkts.map(function(b,i){
     var isA=i===activeIdx;
-    var loS=fmt2(b.lo),hiS=b.hi>=9999999?'\u221e':fmt2(b.hi);
+    var loS=fmt2(b.lo),hiS=b.hi>=9999999?'∞':fmt2(b.hi);
     var st=isA?'<span style="background:var(--ac-blue);color:#fff;border-radius:5px;padding:2px 9px;font-size:10px;font-weight:600;">APLICA</span>':'';
     return '<tr'+(isA?' class="hl"':'')+'>'+
       '<td>#'+(i+1)+'</td>'+
-      '<td class="num">'+loS+' \u2013 '+hiS+'</td>'+
+      '<td class="num">'+loS+' – '+hiS+'</td>'+
       '<td class="num" style="color:'+(b.rate===0?'var(--ac-green)':b.rate<=.22?'var(--ac-amber)':'var(--ac-red)')+'">'+fmtP(b.rate)+'</td>'+
       '<td style="font-family:monospace;font-size:11px;">'+b.f+'</td>'+
       '<td style="text-align:center;">'+st+'</td></tr>';
   }).join('');
-  document.getElementById('fn2Note').textContent=cfg.note;
+}
+
+
+// ── SCENARIOS (por país) ──
+var SCENARIOS = {
+  co: {
+    basico: {
+      salary:4000000, renta:400000,
+      inm:180000000, aut:18000000, caj:0, deu:75000000,
+      tasa:12, plazo:60, valori:5, depre:15,
+      exp:[750000,250000,250000,250000,75000,250000,175000],
+      sub:'~$4.000.000 brutos · Bogotá'
+    },
+    medio: {
+      salary:8000000, renta:750000,
+      inm:365000000, aut:35000000, caj:0, deu:150000000,
+      tasa:12, plazo:60, valori:5, depre:15,
+      exp:[1500000,500000,500000,500000,150000,500000,350000],
+      sub:'~$8.000.000 brutos · Bogotá'
+    },
+    alto: {
+      salary:16500000, renta:1500000,
+      inm:730000000, aut:70000000, caj:0, deu:300000000,
+      tasa:12, plazo:60, valori:5, depre:15,
+      exp:[3000000,1000000,1000000,1000000,300000,1000000,700000],
+      sub:'~$16.500.000 brutos · Bogotá'
+    }
+  },
+  us: {
+    basico: {
+      salary:2500, renta:250,
+      inm:175000, aut:15000, caj:0, deu:75000,
+      tasa:7, plazo:360, valori:4, depre:15,
+      exp:[1100,320,425,490,190,225],
+      sub:'~$2,500/mes · New Jersey'
+    },
+    medio: {
+      salary:5000, renta:500,
+      inm:350000, aut:30000, caj:0, deu:150000,
+      tasa:7, plazo:360, valori:4, depre:15,
+      exp:[2200,635,850,980,380,450],
+      sub:'~$5,000/mes · New Jersey'
+    },
+    alto: {
+      salary:10000, renta:1000,
+      inm:700000, aut:60000, caj:0, deu:300000,
+      tasa:7, plazo:360, valori:4, depre:15,
+      exp:[4400,1270,1700,1960,760,900],
+      sub:'~$10,000/mes · New Jersey'
+    }
+  },
+  eu: {
+    basico: {
+      salary:1500, renta:300,
+      inm:140000, aut:10000, caj:0, deu:60000,
+      tasa:3.5, plazo:240, valori:4, depre:15,
+      exp:[690,180,375,105,40,75,175],
+      sub:'~€1.500/mes · Madrid'
+    },
+    medio: {
+      salary:3000, renta:500,
+      inm:280000, aut:20000, caj:0, deu:120000,
+      tasa:3.5, plazo:240, valori:4, depre:15,
+      exp:[1380,360,750,210,80,150,350],
+      sub:'~€3.000/mes · Madrid'
+    },
+    alto: {
+      salary:6000, renta:1000,
+      inm:560000, aut:40000, caj:0, deu:240000,
+      tasa:3.5, plazo:240, valori:4, depre:15,
+      exp:[2760,720,1500,420,160,300,700],
+      sub:'~€6.000/mes · Madrid'
+    }
+  }
+};
+
+function loadScenario(key, btn) {
+  var s = SCENARIOS[CUR] && SCENARIOS[CUR][key];
+  if (!s) return;
+  // Highlight button
+  btn.parentElement.querySelectorAll('.sc-btn').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  // Set salary slider
+  var sl = document.getElementById('sl1');
+  sl.value = s.salary;
+  // Set param inputs
+  function setNIval(id, v, pct) {
+    var el = document.getElementById(id);
+    if (!el) return;
+    el.dataset.raw = v;
+    el.value = fmtNI(v, pct);
+  }
+  setNIval('v_renta', s.renta, false);
+  setNIval('v_inm',   s.inm,   false);
+  setNIval('v_aut',   s.aut,   false);
+  setNIval('v_caj',   s.caj,   false);
+  setNIval('v_deu',   s.deu,   false);
+  setNIval('v_tasa',  s.tasa,  true);
+  setNIval('v_plazo', s.plazo, false);
+  setNIval('v_valori',s.valori,true);
+  setNIval('v_depre', s.depre, true);
+  // Set expense inputs
+  s.exp.forEach(function(v, i) {
+    var el = document.getElementById('ee' + i);
+    if (!el) return;
+    el.dataset.raw = v;
+    el.value = fmtNI(v, false);
+  });
+  buildExp();
+  // Reload expense values after rebuild
+  s.exp.forEach(function(v, i) {
+    var el = document.getElementById('ee' + i);
+    if (!el) return;
+    el.dataset.raw = v;
+    el.value = fmtNI(v, false);
+  });
+  updateScenarioLabels();
+  // Update salary label immediately
+  var lbl=document.getElementById('lbl1');
+  if(lbl) lbl.textContent=CC[CUR].sym+miles(s.salary);
+  updateP1();
+}
+
+function updateScenarioLabels() {
+  var sc = SCENARIOS[CUR];
+  if (!sc) return;
+  var keys = ['basico','medio','alto'];
+  var btns = document.querySelectorAll('.sc-btn');
+  btns.forEach(function(btn, i) {
+    var key = keys[i];
+    if (!sc[key]) return;
+    var subEl = btn.querySelector('.sc-sub');
+    if (subEl) subEl.textContent = sc[key].sub;
+  });
 }
 
 // ── INIT ──
 buildExp();
+updateScenarioLabels();
 ['v_renta','v_inm','v_aut','v_caj','v_deu','v_plazo'].forEach(function(id){setupNI(id,false,updateP1);});
 ['v_tasa','v_valori','v_depre'].forEach(function(id){setupNI(id,true,updateP1);});
 document.getElementById('sl1').addEventListener('input',updateP1);
-document.getElementById('sl2').addEventListener('input',updateP2);
+
 updateP1();
 </script>
 </body>
