@@ -139,6 +139,8 @@ input:checked+.ts:before{transform:translateX(20px);}
   .page{padding:12px 10px 32px;}
   .sh{font-size:10px;padding:7px 10px;margin:20px 0 10px;}
   .cs-wrap{grid-template-columns:1fr!important;}
+  #selectorRow{grid-template-columns:1fr!important;}
+  .author-line{display:none!important;}
   .cs-btn{padding:10px 12px;}
   .cs-flag{font-size:22px;}
   .cs-name{font-size:13px;}
@@ -174,7 +176,13 @@ input:checked+.ts:before{transform:translateX(20px);}
 <body>
 <header>
   <div class="logo" style="font-size:18px;background:linear-gradient(135deg,#6366f1,#3b82f6);">&#127775;</div>
-  <div><div class="th1">Planeaci&oacute;n Financiera</div><div class="th2">Balance &middot; P&amp;G &middot; Flujo de Caja &middot; An&aacute;lisis &middot; 2025</div></div>
+  <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap;">
+    <div class="th1" style="font-size:20px;font-weight:800;background:linear-gradient(90deg,#6366f1,#3b82f6,#06b6d4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:-.02em;">Planeaci&oacute;n Financiera</div>
+    <div class="author-line" style="font-size:11px;color:var(--muted);white-space:nowrap;">
+      Creado por &nbsp;<span style="font-weight:700;font-size:12px;background:linear-gradient(90deg,#f59e0b,#f97316);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Mauricio Montoya E.</span>
+      &nbsp;<span style="font-size:10px;color:var(--muted);">Master en Corporate Finance</span>
+    </div>
+  </div>
   <div class="sp"></div>
   <div class="tog-w">
     <span>&#9728;</span>
@@ -185,50 +193,48 @@ input:checked+.ts:before{transform:translateX(20px);}
 
 <!-- PAGE 1 -->
 <div id="p1" class="page">
-<div class="sh c-blue" style="margin-top:0;"><span class="sb">&#127968;</span> Selecciona el hogar</div>
-<div class="cs-wrap">
-  <button class="cs-btn on" onclick="switchCountry('co',this)">
-    <span class="cs-flag">&#127464;&#127476;</span>
-    <div><div class="cs-name">Colombia</div><div class="cs-sub">COP &middot; Bogot&aacute;</div></div>
-  </button>
-  <button class="cs-btn" onclick="switchCountry('us',this)">
-    <span class="cs-flag">&#127482;&#127480;</span>
-    <div><div class="cs-name">Estados Unidos</div><div class="cs-sub">USD &middot; New Jersey</div></div>
-  </button>
-  <button class="cs-btn" onclick="switchCountry('eu',this)">
-    <span class="cs-flag">&#127466;&#127480;</span>
-    <div><div class="cs-name">Europa</div><div class="cs-sub">EUR &middot; Madrid</div></div>
-  </button>
-</div>
-
-<div class="sh c-indigo"><span class="sb">&#127919;</span> Escenario de ingresos <span class="note">valores proporcionales entre sí</span></div>
-<div class="sc-wrap">
-  <button class="sc-btn" onclick="loadScenario('basico',this)">
-    <span class="sc-icon">&#127793;</span>
-    <div>
-      <div class="sc-name">Ingreso b&aacute;sico</div>
-      <div class="sc-sub">~$4.000.000 brutos &middot; Familia 3 personas</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:0;" id="selectorRow">
+  <!-- PAÍS -->
+  <div>
+    <div class="sh c-blue" style="margin-top:0;margin-bottom:10px;"><span class="sb">&#127968;</span> Pa&iacute;s</div>
+    <div style="display:flex;flex-direction:column;gap:7px;">
+      <button class="cs-btn on" onclick="switchCountry('co',this)">
+        <span class="cs-flag">&#127464;&#127476;</span>
+        <div><div class="cs-name">Colombia</div><div class="cs-sub">COP &middot; Bogot&aacute;</div></div>
+      </button>
+      <button class="cs-btn" onclick="switchCountry('us',this)">
+        <span class="cs-flag">&#127482;&#127480;</span>
+        <div><div class="cs-name">Estados Unidos</div><div class="cs-sub">USD &middot; New Jersey</div></div>
+      </button>
+      <button class="cs-btn" onclick="switchCountry('eu',this)">
+        <span class="cs-flag">&#127466;&#127480;</span>
+        <div><div class="cs-name">Europa</div><div class="cs-sub">EUR &middot; Madrid</div></div>
+      </button>
     </div>
-  </button>
-  <button class="sc-btn" onclick="loadScenario('medio',this)">
-    <span class="sc-icon">&#128202;</span>
-    <div>
-      <div class="sc-name">Ingreso medio</div>
-      <div class="sc-sub">~$8.000.000 brutos &middot; Familia 3 personas</div>
+  </div>
+  <!-- ESCENARIO -->
+  <div>
+    <div class="sh c-indigo" style="margin-top:0;margin-bottom:10px;"><span class="sb">&#127919;</span> Escenario de ingresos <span class="note">valores proporcionales</span></div>
+    <div style="display:flex;flex-direction:column;gap:7px;">
+      <button class="sc-btn" onclick="loadScenario('basico',this)">
+        <span class="sc-icon">&#127793;</span>
+        <div><div class="sc-name">Ingreso b&aacute;sico</div><div class="sc-sub" id="sc_sub_basico">&#8212;</div></div>
+      </button>
+      <button class="sc-btn" onclick="loadScenario('medio',this)">
+        <span class="sc-icon">&#128202;</span>
+        <div><div class="sc-name">Ingreso medio</div><div class="sc-sub" id="sc_sub_medio">&#8212;</div></div>
+      </button>
+      <button class="sc-btn on" onclick="loadScenario('alto',this)">
+        <span class="sc-icon">&#128176;</span>
+        <div><div class="sc-name">Ingreso medio-alto</div><div class="sc-sub" id="sc_sub_alto">&#8212;</div></div>
+      </button>
     </div>
-  </button>
-  <button class="sc-btn on" onclick="loadScenario('alto',this)">
-    <span class="sc-icon">&#128176;</span>
-    <div>
-      <div class="sc-name">Ingreso medio-alto</div>
-      <div class="sc-sub">~$16.500.000 brutos &middot; Familia 3 personas</div>
-    </div>
-  </button>
+  </div>
 </div>
 
 <div class="sh c-cyan"><span class="sb">&#9881;</span> Parámetros del modelo</div>
 <!-- FILA 1 -->
-<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+<div style="display:grid;grid-template-columns:1.2fr 1fr 1fr;gap:12px;margin-bottom:12px;">
   <div class="card">
     <div class="card-t">Ingresos laborales e inmobiliarios</div>
     <div class="if" style="margin-bottom:14px;">
@@ -246,15 +252,30 @@ input:checked+.ts:before{transform:translateX(20px);}
       <div class="if"><label>Tasa EA (%)</label><input class="ni" id="v_tasa" value="12,00" data-raw="12"></div>
       <div class="if"><label>Plazo restante (meses)</label><input class="ni" id="v_plazo" value="60" data-raw="60"></div>
     </div>
-    <div style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;">
+    <div style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;">
       <div style="font-size:11px;color:var(--muted);margin-bottom:6px;">Cuota mensual calculada (sistema franc&eacute;s)</div>
-      <div style="font-size:24px;font-weight:700;color:var(--ac-amber);" id="lblCuota">&#8212;</div>
-      <div style="font-size:12px;color:var(--muted);margin-top:6px;">Capital: <span id="lblPr" style="color:var(--text);font-weight:500;">&#8212;</span> &nbsp;&nbsp; Intereses: <span id="lblIn" style="color:var(--text);font-weight:500;">&#8212;</span></div>
+      <div style="font-size:22px;font-weight:700;color:var(--ac-amber);" id="lblCuota">&#8212;</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:4px;">Capital: <span id="lblPr" style="color:var(--text);font-weight:500;">&#8212;</span> &nbsp;&nbsp; Intereses: <span id="lblIn" style="color:var(--text);font-weight:500;">&#8212;</span></div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-t">Supuestos de valoraci&oacute;n</div>
+    <div class="if" style="margin-bottom:10px;"><label>Valorizaci&oacute;n inmob. (%/a&ntilde;o)</label><input class="ni" id="v_valori" value="5,00" data-raw="5"></div>
+    <div class="if" style="margin-bottom:14px;"><label>Depreciaci&oacute;n veh&iacute;culo (%/a&ntilde;o)</label><input class="ni" id="v_depre" value="15,00" data-raw="15"></div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+      <div style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:10px 12px;">
+        <div style="font-size:10px;color:var(--muted);margin-bottom:4px;">Valoriz./mes</div>
+        <div style="font-size:16px;font-weight:700;color:var(--ac-green);" id="lblVm">&#8212;</div>
+      </div>
+      <div style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:10px 12px;">
+        <div style="font-size:10px;color:var(--muted);margin-bottom:4px;">Depr./mes</div>
+        <div style="font-size:16px;font-weight:700;color:var(--ac-red);" id="lblDm">&#8212;</div>
+      </div>
     </div>
   </div>
 </div>
 <!-- FILA 2 -->
-<div style="display:grid;grid-template-columns:1fr 1fr 1.6fr;gap:12px;margin-bottom:14px;">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
   <div class="card">
     <div class="card-t">Activos</div>
     <div class="if" style="margin-bottom:10px;"><label>Inmobiliario</label><input class="ni" id="v_inm" value="730.000.000" data-raw="730000000"></div>
@@ -269,28 +290,17 @@ input:checked+.ts:before{transform:translateX(20px);}
       <div style="font-size:24px;font-weight:700;color:var(--ac-cyan);" id="lblPN">&#8212;</div>
     </div>
   </div>
-  <div class="card">
-    <div class="card-t">Supuestos de valoraci&oacute;n anual</div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
-      <div class="if"><label>Valorizaci&oacute;n inmob. (%/a&ntilde;o)</label><input class="ni" id="v_valori" value="5,00" data-raw="5"></div>
-      <div class="if"><label>Depreciaci&oacute;n veh&iacute;culo (%/a&ntilde;o)</label><input class="ni" id="v_depre" value="15,00" data-raw="15"></div>
-    </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-      <div style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;">
-        <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">Valorizaci&oacute;n inmob./mes</div>
-        <div style="font-size:20px;font-weight:700;color:var(--ac-green);" id="lblVm">&#8212;</div>
-      </div>
-      <div style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;">
-        <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">Depreciaci&oacute;n auto/mes</div>
-        <div style="font-size:20px;font-weight:700;color:var(--ac-red);" id="lblDm">&#8212;</div>
-      </div>
-    </div>
-  </div>
 </div>
-
 <div class="sh c-orange"><span class="sb">&#128248;</span> Gastos operativos del hogar <span class="note">(sin servicio de deuda · editables)</span></div>
 <div class="egrid" id="expGrid"></div>
 
+<div style="display:flex;justify-content:flex-end;align-items:center;gap:14px;margin-bottom:14px;padding:10px 14px;background:var(--card);border:1px solid var(--border);border-radius:10px;">
+  <span style="font-size:12px;color:var(--muted);">Ahorro mensual <span style="font-size:10px;">(&#8594; activos)</span></span>
+  <span style="font-size:15px;font-weight:700;color:var(--ac-green);" id="totalAhorro">&#8212;</span>
+  <span style="width:1px;height:24px;background:var(--border);display:inline-block;margin:0 4px;"></span>
+  <span style="font-size:12px;color:var(--muted);">Total gastos operativos / mes</span>
+  <span style="font-size:18px;font-weight:700;color:var(--ac-orange);" id="totalGastos">&#8212;</span>
+</div>
 <div class="sh c-green"><span class="sb">&#9733;</span> Indicadores clave</div>
 <div class="kgrid">
   <div class="kc acc">
@@ -321,7 +331,7 @@ input:checked+.ts:before{transform:translateX(20px);}
 <div class="sh c-blue"><span class="sb">1</span> Balance general del hogar</div>
 <div class="tw tw-wide">
   <table class="ft">
-    <thead><tr><th style="width:40%;text-align:left;">Concepto</th><th>Mes 0</th><th>Mes 12</th><th>Variaci&oacute;n anual</th></tr></thead>
+    <thead><tr><th style="width:40%;text-align:left;">Concepto</th><th>Mes 12</th><th>Variaci&oacute;n anual</th></tr></thead>
     <tbody id="balTbody"></tbody>
   </table>
 </div>
@@ -608,6 +618,8 @@ function updateP1(){
   // KPI 5: gasto operativo mensual (excl. ahorro)
   var totalGasto=exp;
   set('kpi5',fmt(totalGasto),'var(--ac-orange)',fmtP(totalGasto/ingT)+' del ingreso neto','');
+  var elTG=document.getElementById('totalGastos');if(elTG)elTG.textContent=fmt(totalGasto);
+  var elTA=document.getElementById('totalAhorro');if(elTA)elTA.textContent=fmt(ahorro);
   // KPI 6: amortización crédito anual (capital pagado en 12 meses)
   var amorAnual=0,dTemp=deu0;
   for(var mm=1;mm<=12;mm++){var dbTemp=calcDebt(dTemp,tasa,Math.max(1,plazo-mm+1));amorAnual+=dbTemp.prin;dTemp=Math.max(0,dTemp-dbTemp.prin);}
@@ -618,17 +630,17 @@ function updateP1(){
 
   function bR(lbl,m0,m12,cls){
     var d=m12-m0,dC=d===0?'':'style="color:'+(d>0?'var(--ac-green)':'var(--ac-red)')+'"';
-    return '<tr class="'+(cls||'')+'"><td>'+lbl+'</td><td class="num">'+fmt(m0)+'</td><td class="num">'+fmt(m12)+'</td><td class="num" '+dC+'>'+(d===0?'\u2014':sgn(d)+fmt(d))+'</td></tr>';
+    return '<tr class="'+(cls||'')+'"><td>'+lbl+'</td><td class="num">'+fmt(m12)+'</td><td class="num" '+dC+'>'+(d===0?'\u2014':sgn(d)+fmt(d))+'</td></tr>';
   }
   document.getElementById('balTbody').innerHTML=
-    '<tr class="grp"><td colspan="4">ACTIVOS</td></tr>'+
+    '<tr class="grp"><td colspan="3">ACTIVOS</td></tr>'+
     bR('Efectivo y equivalentes',caj0,p12.c,'')+
     bR('Ahorros e inversiones acumulados',0,p12.s,'')+
     bR('Inversiones inmobiliarias',inm0,inm0+apM*12,'')+
     bR('Veh\u00edculo (neto depr.)',aut0,Math.max(0,aut0-dpM*12),'')+
     bR('Total Activos',actT,p12.a,'tot')+
-    '<tr class="grp"><td colspan="4">PASIVOS</td></tr>'+bR('Deuda financiera',deu0,p12.p,'')+bR('Total Pasivos',pasT,p12.p,'tot')+
-    '<tr class="grp"><td colspan="4">PATRIMONIO</td></tr>'+bR('Capital y resultados acumulados',patN,p12.pat,'')+bR('Total Pasivos + Patrimonio',actT,p12.a,'tot');
+    '<tr class="grp"><td colspan="3">PASIVOS</td></tr>'+bR('Deuda financiera',deu0,p12.p,'')+bR('Total Pasivos',pasT,p12.p,'tot')+
+    '<tr class="grp"><td colspan="3">PATRIMONIO</td></tr>'+bR('Capital y resultados acumulados',patN,p12.pat,'')+bR('Total Pasivos + Patrimonio',actT,p12.a,'tot');
 
   function pR(l,v,cls,par){var dv=(par&&v<0)?'('+fmt(v)+')':fmt(v);var col=(cls==='tot')?'style="color:'+cS(v)+'"':(cls==='tot2')?'style="color:'+(v>=0?'var(--ac-cyan)':'var(--ac-red)')+'"':'';return '<tr class="'+(cls||'')+'"><td>'+l+'</td><td class="num" '+(col||'')+'>'+dv+'</td></tr>';}
   var er='';cfg.exp.forEach(function(e,i){
@@ -845,13 +857,9 @@ function loadScenario(key, btn) {
 function updateScenarioLabels() {
   var sc = SCENARIOS[CUR];
   if (!sc) return;
-  var keys = ['basico','medio','alto'];
-  var btns = document.querySelectorAll('.sc-btn');
-  btns.forEach(function(btn, i) {
-    var key = keys[i];
-    if (!sc[key]) return;
-    var subEl = btn.querySelector('.sc-sub');
-    if (subEl) subEl.textContent = sc[key].sub;
+  ['basico','medio','alto'].forEach(function(key) {
+    var el = document.getElementById('sc_sub_' + key);
+    if (el && sc[key]) el.textContent = sc[key].sub;
   });
 }
 
