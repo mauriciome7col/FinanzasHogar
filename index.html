@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estados Financieros del Hogar · 2025</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;transition:background .25s,color .25s,border-color .25s;}
+:root{--bg:#0d1117;--card:#1a2236;--card2:#1e2a3a;--text:#fff;--muted:#8899bb;--border:#2a3a52;--border2:#364a66;--ac-blue:#3b82f6;--ac-cyan:#06b6d4;--ac-amber:#f59e0b;--ac-green:#22c55e;--ac-indigo:#6366f1;--ac-red:#f87171;--ac-purple:#c084fc;--tot-bg:rgba(59,130,246,.08);--tot-bd:#3b82f6;--grp:#131c2b;}
+[data-theme="light"]{--bg:#f0f4fb;--card:#fff;--card2:#f4f7fd;--text:#0f1a35;--muted:#5a6a8a;--border:#d0d9ee;--border2:#b8c5de;--tot-bg:rgba(59,130,246,.06);--grp:#e8edf6;}
+body{font-family:'Inter','Aptos',system-ui,sans-serif;background:var(--bg);color:var(--text);font-size:14px;line-height:1.6;}
+
+/* HEADER */
+header{background:var(--card);border-bottom:1px solid var(--border);padding:0 24px;display:flex;align-items:center;gap:16px;height:56px;position:sticky;top:0;z-index:100;}
+.logo{width:30px;height:30px;background:var(--ac-blue);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:#fff;flex-shrink:0;}
+.th1{font-size:15px;font-weight:600;}.th2{font-size:11px;color:var(--muted);}
+.sp{flex:1;}
+.nav-pills{display:flex;gap:4px;background:var(--card2);border:1px solid var(--border);border-radius:9px;padding:3px;}
+.np{background:transparent;border:none;color:var(--muted);font-size:12px;font-weight:500;font-family:inherit;padding:6px 16px;border-radius:6px;cursor:pointer;transition:background .15s,color .15s;white-space:nowrap;}
+.np.on{background:var(--ac-blue);color:#fff;}
+.tog-w{display:flex;align-items:center;gap:8px;}
+.tog-w span{font-size:13px;color:var(--muted);}
+.tog{position:relative;width:44px;height:24px;cursor:pointer;}
+.tog input{opacity:0;width:0;height:0;}
+.ts{position:absolute;inset:0;background:var(--border2);border-radius:24px;transition:.25s;}
+.ts:before{content:'';position:absolute;width:18px;height:18px;left:3px;bottom:3px;background:#fff;border-radius:50%;transition:.25s;}
+input:checked+.ts{background:var(--ac-blue);}
+input:checked+.ts:before{transform:translateX(20px);}
+
+/* PAGE */
+.page{max-width:1100px;margin:0 auto;padding:24px 22px 48px;}
+.sh{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;margin:28px 0 14px;padding:8px 14px;border-radius:8px;background:rgba(59,130,246,.07);border:1px solid rgba(59,130,246,.15);display:flex;align-items:center;gap:8px;}
+.sh:first-child{margin-top:0;}
+.sb{background:var(--ac-blue);color:#fff;border-radius:6px;padding:3px 9px;font-size:10px;font-weight:700;}
+
+/* COUNTRY SELECTOR */
+.cs-wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:20px;}
+.cs-btn{background:var(--card);border:2px solid var(--border);border-radius:12px;padding:14px 16px;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:12px;transition:all .2s;text-align:left;}
+.cs-btn:hover{border-color:var(--border2);}
+.cs-btn.on{border-color:var(--ac-blue);background:rgba(59,130,246,.08);}
+.cs-flag{font-size:28px;line-height:1;flex-shrink:0;}
+.cs-name{font-size:14px;font-weight:600;color:var(--text);}
+.cs-sub{font-size:11px;color:var(--muted);margin-top:2px;}
+
+/* CARDS */
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 18px;}
+.card-t{font-size:11px;font-weight:700;color:var(--text);text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px;opacity:.7;}
+.if label{display:block;font-size:11px;color:var(--muted);margin-bottom:5px;font-weight:500;}
+.ni{width:100%;background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:8px 12px;font-size:14px;font-family:inherit;text-align:right;outline:none;transition:border-color .15s;-webkit-appearance:none;}
+.ni:focus{border-color:var(--ac-blue);background:var(--card);}
+.sal-row{display:flex;align-items:center;gap:12px;}
+.sal-row input[type=range]{flex:1;accent-color:var(--ac-blue);}
+.sal-v{font-size:15px;font-weight:600;min-width:140px;text-align:right;color:var(--ac-cyan);}
+
+/* KPI */
+.kgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:14px;}
+.kc{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px 16px;}
+.kc.acc{border-color:var(--ac-blue);}
+.kl{font-size:11px;color:var(--muted);margin-bottom:4px;}.kv{font-size:22px;font-weight:600;}.ks{font-size:11px;color:var(--muted);margin-top:3px;}
+
+/* TABLE */
+.tw{background:var(--card);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.tw-wide{overflow-x:auto;-webkit-overflow-scrolling:touch;}
+.ft{width:100%;border-collapse:collapse;font-size:13px;}
+.ft th{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.04em;padding:11px 14px;background:var(--grp);border-bottom:1px solid var(--border);}
+.ft th:not(:first-child){text-align:right;}
+.ft td{padding:9px 14px;border-top:1px solid var(--border);}
+.ft .num{text-align:right;font-variant-numeric:tabular-nums;}
+.ft .grp td{font-size:11px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;background:var(--grp);padding:7px 14px;}
+.ft .tot td{font-weight:600;background:var(--tot-bg);border-top:2px solid var(--tot-bd);}
+.ft .tot2 td{font-weight:600;background:var(--card2);}
+.ft .memo td{color:var(--muted);font-size:11px;background:var(--grp);padding:6px 14px;}
+.ft .hl td{background:rgba(59,130,246,.12);font-weight:500;}
+
+/* EXPENSES */
+.egrid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;}
+.er{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:9px 12px;}
+.er label{font-size:12px;color:var(--muted);flex:1;}
+.ei{background:var(--card2);border:1px solid var(--border);color:var(--text);border-radius:7px;padding:6px 10px;font-size:13px;width:145px;text-align:right;font-family:inherit;outline:none;transition:border-color .15s;-webkit-appearance:none;}
+.ei:focus{border-color:var(--ac-blue);}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+
+/* SEMÁFORO */
+.semGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:14px;}
+.semCard{background:var(--card);border-radius:12px;padding:16px 18px;border-left:4px solid;}
+.semCard.v{border-color:#22c55e;}.semCard.a{border-color:#f59e0b;}.semCard.r{border-color:#f87171;}
+.sem-ic{font-size:18px;margin-bottom:6px;}.sem-t{font-size:12px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:.05em;}
+.sem-v{font-size:24px;font-weight:700;margin:4px 0 2px;}
+.sem-v.v{color:#22c55e;}.sem-v.a{color:#f59e0b;}.sem-v.r{color:#f87171;}
+.sem-d{font-size:12px;color:var(--muted);line-height:1.5;}
+.sem-b{font-size:11px;margin-top:6px;padding:4px 8px;border-radius:5px;display:inline-block;}
+.sem-b.v{background:rgba(34,197,94,.12);color:#22c55e;}.sem-b.a{background:rgba(245,158,11,.12);color:#f59e0b;}.sem-b.r{background:rgba(248,113,113,.12);color:#f87171;}
+
+/* DIAG */
+.diagCard{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 22px;margin-bottom:14px;}
+.diagCard h3{font-size:14px;font-weight:600;margin-bottom:12px;}
+.dPara{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:8px;}
+.dPara strong{color:var(--text);}
+.tag{display:inline-block;border-radius:5px;padding:2px 9px;font-size:11px;font-weight:600;margin-right:4px;}
+.tag.g{background:rgba(34,197,94,.15);color:#22c55e;}.tag.a{background:rgba(245,158,11,.15);color:#f59e0b;}.tag.r{background:rgba(248,113,113,.15);color:#f87171;}
+.recoList{list-style:none;padding:0;}
+.recoList li{font-size:13px;color:var(--muted);padding:6px 0;border-top:1px solid var(--border);display:flex;gap:10px;align-items:flex-start;}
+.recoList li:first-child{border-top:none;}
+.fn{font-size:11px;color:var(--muted);margin-top:20px;padding:12px 16px;background:var(--card);border:1px solid var(--border);border-radius:10px;line-height:1.8;}
+
+/* P2 */
+.bkt-bar{height:6px;border-radius:3px;background:var(--border);overflow:hidden;margin-top:5px;}
+.bkt-fill{height:100%;border-radius:3px;background:var(--ac-blue);transition:width .3s;}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+  header{padding:0 12px;height:auto;min-height:52px;flex-wrap:wrap;gap:8px;padding-top:10px;padding-bottom:10px;}
+  .th1{font-size:13px;}.th2{display:none;}
+  .nav-pills{order:10;width:100%;margin-top:2px;margin-bottom:4px;}
+  .np{font-size:11px;padding:5px 10px;flex:1;text-align:center;}
+  .tog-w{margin-left:auto;}
+  .page{padding:12px 10px 32px;}
+  .sh{font-size:10px;padding:7px 10px;margin:20px 0 10px;}
+  .cs-wrap{grid-template-columns:1fr!important;}
+  .cs-btn{padding:10px 12px;}
+  .cs-flag{font-size:22px;}
+  .cs-name{font-size:13px;}
+  div[style*="grid-template-columns:1fr 1fr"]{grid-template-columns:1fr!important;}
+  div[style*="grid-template-columns:1fr 1fr 1.6fr"]{grid-template-columns:1fr!important;}
+  div[style*="grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px"]{grid-template-columns:1fr 1fr!important;}
+  div[style*="grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px"]{grid-template-columns:1fr 1fr!important;}
+  .sal-row{flex-wrap:wrap;gap:8px;}
+  .sal-v{min-width:auto;font-size:16px;}
+  .sal-row input[type=range]{width:100%;}
+  #lblCuota{font-size:20px!important;}#lblPN{font-size:20px!important;}
+  .card{padding:12px 14px;border-radius:10px;}
+  .egrid{grid-template-columns:1fr!important;}
+  .er label{font-size:11px;}.ei{width:120px;font-size:16px!important;}
+  .kgrid{grid-template-columns:1fr 1fr!important;gap:8px;}
+  .kv{font-size:18px!important;}
+  .tw-wide .ft{min-width:500px;}
+  .ft{width:100%;font-size:11px;}
+  .ft td,.ft th{padding:6px 8px;}
+  .ft .hide-mob{display:none;}
+  .two{grid-template-columns:1fr!important;}
+  .semGrid{grid-template-columns:1fr!important;}
+  .semCard{padding:14px;}
+  .sem-v{font-size:20px!important;}
+  .diagCard{padding:14px;}
+  .dPara{font-size:12px;}
+  .recoList li{font-size:12px;}
+}
+@media(max-width:480px){.kgrid{grid-template-columns:1fr 1fr!important;}.kv{font-size:16px!important;}.ft{font-size:10px;}.ft td,.ft th{padding:5px 6px;}.np{font-size:10px;padding:4px 6px;}}
+@media(max-width:768px){.ni,.ei,input[type=number]{font-size:16px!important;}}
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">3F</div>
+  <div><div class="th1">Estados Financieros del Hogar</div><div class="th2">Balance &middot; P&amp;G &middot; Flujo de Caja &middot; 2025</div></div>
+  <div class="sp"></div>
+  <div class="nav-pills">
+    <button class="np on" onclick="goPage(1,this)">&#128196; Hoja 1 &middot; Estados</button>
+    <button class="np" onclick="goPage(2,this)">&#128204; Hoja 2 &middot; Calculadoras</button>
+  </div>
+  <div class="sp"></div>
+  <div class="tog-w">
+    <span>&#9728;</span>
+    <label class="tog"><input type="checkbox" id="themeToggle" checked><span class="ts"></span></label>
+    <span>&#127769;</span>
+  </div>
+</header>
+
+<!-- PAGE 1 -->
+<div id="p1" class="page">
+<div class="sh" style="margin-top:0;"><span class="sb">&#127968;</span> Selecciona el hogar</div>
+<div class="cs-wrap">
+  <button class="cs-btn on" onclick="switchCountry('co',this)">
+    <span class="cs-flag">&#127464;&#127476;</span>
+    <div><div class="cs-name">Colombia</div><div class="cs-sub">COP &middot; Bogot&aacute;</div></div>
+  </button>
+  <button class="cs-btn" onclick="switchCountry('us',this)">
+    <span class="cs-flag">&#127482;&#127480;</span>
+    <div><div class="cs-name">Estados Unidos</div><div class="cs-sub">USD &middot; New Jersey</div></div>
+  </button>
+  <button class="cs-btn" onclick="switchCountry('eu',this)">
+    <span class="cs-flag">&#127466;&#127480;</span>
+    <div><div class="cs-name">Europa</div><div class="cs-sub">EUR &middot; Madrid</div></div>
+  </button>
+</div>
+
+<div class="sh"><span class="sb">&#9881;</span> Par&aacute;metros del modelo</div>
+<!-- FILA 1 -->
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px;">
+  <div class="card">
+    <div class="card-t">Ingresos laborales e inmobiliarios</div>
+    <div class="if" style="margin-bottom:14px;">
+      <label>Salario mensual bruto</label>
+      <div class="sal-row" style="margin-top:4px;">
+        <input type="range" id="sl1" min="2000000" max="50000000" step="100000" value="16500000">
+        <span class="sal-v" id="lbl1">$16.500.000</span>
+      </div>
+    </div>
+    <div class="if"><label>Renta inmuebles / mes</label><input class="ni" id="v_renta" value="1.500.000" data-raw="1500000"></div>
+  </div>
+  <div class="card">
+    <div class="card-t">Servicio de deuda</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
+      <div class="if"><label>Tasa EA (%)</label><input class="ni" id="v_tasa" value="12,00" data-raw="12"></div>
+      <div class="if"><label>Plazo restante (meses)</label><input class="ni" id="v_plazo" value="120" data-raw="120"></div>
+    </div>
+    <div style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;">
+      <div style="font-size:11px;color:var(--muted);margin-bottom:6px;">Cuota mensual calculada (sistema franc&eacute;s)</div>
+      <div style="font-size:24px;font-weight:700;color:var(--ac-amber);" id="lblCuota">&#8212;</div>
+      <div style="font-size:12px;color:var(--muted);margin-top:6px;">Capital: <span id="lblPr" style="color:var(--text);font-weight:500;">&#8212;</span> &nbsp;&nbsp; Intereses: <span id="lblIn" style="color:var(--text);font-weight:500;">&#8212;</span></div>
+    </div>
+  </div>
+</div>
+<!-- FILA 2 -->
+<div style="display:grid;grid-template-columns:1fr 1fr 1.6fr;gap:12px;margin-bottom:14px;">
+  <div class="card">
+    <div class="card-t">Activos</div>
+    <div class="if" style="margin-bottom:10px;"><label>Inmobiliario</label><input class="ni" id="v_inm" value="730.000.000" data-raw="730000000"></div>
+    <div class="if" style="margin-bottom:10px;"><label>Veh&iacute;culo</label><input class="ni" id="v_aut" value="60.000.000" data-raw="60000000"></div>
+    <div class="if"><label>Efectivo / ahorros</label><input class="ni" id="v_caj" value="20.000.000" data-raw="20000000"></div>
+  </div>
+  <div class="card">
+    <div class="card-t">Pasivos</div>
+    <div class="if" style="margin-bottom:14px;"><label>Total deuda</label><input class="ni" id="v_deu" value="300.000.000" data-raw="300000000"></div>
+    <div style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:14px 16px;">
+      <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">Patrimonio neto</div>
+      <div style="font-size:24px;font-weight:700;color:var(--ac-cyan);" id="lblPN">&#8212;</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-t">Supuestos de valoraci&oacute;n anual</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+      <div class="if"><label>Valorizaci&oacute;n inmob. (%/a&ntilde;o)</label><input class="ni" id="v_valori" value="5,00" data-raw="5"></div>
+      <div class="if"><label>Depreciaci&oacute;n veh&iacute;culo (%/a&ntilde;o)</label><input class="ni" id="v_depre" value="15,00" data-raw="15"></div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;">
+        <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">Valorizaci&oacute;n inmob./mes</div>
+        <div style="font-size:20px;font-weight:700;color:var(--ac-green);" id="lblVm">&#8212;</div>
+      </div>
+      <div style="background:var(--card2);border:1px solid var(--border);border-radius:10px;padding:12px 14px;">
+        <div style="font-size:11px;color:var(--muted);margin-bottom:4px;">Depreciaci&oacute;n auto/mes</div>
+        <div style="font-size:20px;font-weight:700;color:var(--ac-red);" id="lblDm">&#8212;</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="sh"><span class="sb">&#128248;</span> Gastos operativos del hogar &nbsp;<span style="font-size:11px;text-transform:none;font-weight:400;">(sin servicio de deuda &middot; editables)</span></div>
+<div class="egrid" id="expGrid"></div>
+
+<div class="sh"><span class="sb">&#9733;</span> Indicadores clave</div>
+<div class="kgrid">
+  <div class="kc acc"><div class="kl">Patrimonio neto</div><div class="kv" id="kpi1">&#8212;</div><div class="ks" id="kpi1b">&#8212;</div></div>
+  <div class="kc"><div class="kl">Surplus / d&eacute;ficit caja &middot; mes</div><div class="kv" id="kpi2">&#8212;</div><div class="ks" id="kpi2b">&#8212;</div></div>
+  <div class="kc"><div class="kl">Cobertura deuda &middot; FCO / cuota</div><div class="kv" id="kpi3">&#8212;</div><div class="ks" id="kpi3b">&#8212;</div></div>
+  <div class="kc"><div class="kl">Ratio deuda / activos</div><div class="kv" id="kpi4">&#8212;</div><div class="ks" id="kpi4b">&#8212;</div></div>
+</div>
+
+<div class="sh"><span class="sb">1</span> Balance general del hogar</div>
+<div class="tw tw-wide">
+  <table class="ft">
+    <thead><tr><th style="width:40%;text-align:left;">Concepto</th><th>Mes 0</th><th class="hide-mob">Mes 6</th><th>Mes 12</th><th>Variaci&oacute;n anual</th></tr></thead>
+    <tbody id="balTbody"></tbody>
+  </table>
+</div>
+<div class="two">
+  <div><div class="sh"><span class="sb">2</span> Estado de resultados &middot; mensual</div><div class="tw"><table class="ft"><tbody id="pyg"></tbody></table></div></div>
+  <div><div class="sh"><span class="sb">3</span> Flujo de caja &middot; mensual</div><div class="tw"><table class="ft"><tbody id="cf"></tbody></table></div></div>
+</div>
+
+<div class="sh"><span class="sb">&#128200;</span> An&aacute;lisis financiero &nbsp;<span style="font-size:11px;text-transform:none;font-weight:400;">sem&aacute;foro de salud financiera</span></div>
+<div class="semGrid" id="semGrid"></div>
+<div class="diagCard"><h3>&#128203; Diagn&oacute;stico en lenguaje simple</h3><div id="diagTxt"></div></div>
+<div class="diagCard"><h3>&#128161; Recomendaciones</h3><ul class="recoList" id="recoList"></ul></div>
+<div class="fn" id="fnNote"></div>
+</div>
+
+<!-- PAGE 2 -->
+<div id="p2" class="page" style="display:none;">
+<div class="sh" style="margin-top:0;"><span class="sb">&#128204;</span> Anexo &middot; Calculadoras Salariales</div>
+<div class="cs-wrap">
+  <button class="cs-btn on" onclick="switchCountryP2('co',this)">
+    <span class="cs-flag">&#127464;&#127476;</span>
+    <div><div class="cs-name">Colombia</div><div class="cs-sub">COP &middot; Bogot&aacute;</div></div>
+  </button>
+  <button class="cs-btn" onclick="switchCountryP2('us',this)">
+    <span class="cs-flag">&#127482;&#127480;</span>
+    <div><div class="cs-name">Estados Unidos</div><div class="cs-sub">USD &middot; New Jersey</div></div>
+  </button>
+  <button class="cs-btn" onclick="switchCountryP2('eu',this)">
+    <span class="cs-flag">&#127466;&#127480;</span>
+    <div><div class="cs-name">Europa</div><div class="cs-sub">EUR &middot; Madrid</div></div>
+  </button>
+</div>
+<div class="card" style="margin-bottom:14px;">
+  <div class="card-t">Salario mensual bruto &mdash; mueve el slider</div>
+  <div class="sal-row"><input type="range" id="sl2" min="1423500" max="50000000" step="100000" value="16500000"><span class="sal-v" id="lbl2">$16.500.000</span></div>
+</div>
+<div class="kgrid" style="margin-bottom:14px;">
+  <div class="kc"><div class="kl">Salario bruto</div><div class="kv" style="color:var(--ac-cyan);" id="c2_br">&#8212;</div><div class="ks" id="c2_smlv">&#8212;</div></div>
+  <div class="kc"><div class="kl">Salario neto recibido</div><div class="kv" style="color:var(--ac-green);" id="c2_net">&#8212;</div><div class="ks" id="c2_netP">&#8212;</div></div>
+  <div class="kc"><div class="kl">Descuentos totales</div><div class="kv" style="color:var(--ac-red);" id="c2_des">&#8212;</div><div class="ks" id="c2_desP">&#8212;</div></div>
+  <div class="kc acc"><div class="kl">Costo real para la empresa</div><div class="kv" style="color:var(--ac-amber);" id="c2_cos">&#8212;</div><div class="ks" id="c2_cosX">&#8212;</div></div>
+</div>
+<div class="two">
+  <div><div class="sh"><span class="sb">A</span> Calculadora salarial &mdash; paso a paso</div><div class="tw"><table class="ft"><tbody id="calcSal"></tbody></table></div></div>
+  <div><div class="sh"><span class="sb">B</span> Costo real para la empresa</div><div class="tw"><table class="ft"><tbody id="calcEmp"></tbody></table></div></div>
+</div>
+<div class="sh" style="margin-top:24px;"><span class="sb">C</span> Tabla de tramos impositivos</div>
+<div class="tw tw-wide"><table class="ft"><thead><tr><th style="text-align:left;"># Tramo</th><th>Rango base</th><th>Tasa marginal</th><th>F&oacute;rmula</th><th>Estado</th></tr></thead><tbody id="bktTable"></tbody></table></div>
+<div class="fn" id="fn2Note"></div>
+</div>
+
+<script>
+// ── PAGES ──
+function goPage(n,btn){
+  document.getElementById('p1').style.display=n===1?'':'none';
+  document.getElementById('p2').style.display=n===2?'':'none';
+  btn.parentElement.querySelectorAll('.np').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  if(n===2)updateP2();
+}
+// ── THEME ──
+var H=document.documentElement;
+document.getElementById('themeToggle').addEventListener('change',function(e){
+  H.setAttribute('data-theme',e.target.checked?'dark':'light');
+  updateP1();if(document.getElementById('p2').style.display!=='none')updateP2();
+});
+
+// ── FORMAT ──
+var miles=function(v){return Math.round(Math.abs(v)).toString().replace(/\B(?=(\d{3})+(?!\d))/g,'.');};
+var fmt=function(v){return CC[CUR].sym+miles(v);};
+var fmtP=function(v){return (v*100).toFixed(1)+'%';};
+var sgn=function(v){return v>=0?'+':'\u2212';};
+var cS=function(v){return v>=0?'var(--ac-green)':'var(--ac-red)';};
+
+function parseNI(s){return parseFloat(String(s).replace(/\./g,'').replace(',','.'))||0;}
+function fmtNI(v,pct){
+  var f=Math.abs(v).toFixed(pct?2:0),p=f.split('.');
+  p[0]=p[0].replace(/\B(?=(\d{3})+(?!\d))/g,'.');
+  return p.join(',');
+}
+function gR(id){var el=document.getElementById(id);return el?parseNI(el.dataset.raw||el.value):0;}
+
+function setupNI(id,pct,onChange){
+  var el=document.getElementById(id);if(!el)return;
+  el.addEventListener('focus',function(){el.value=String(parseNI(el.dataset.raw||el.value)).replace('.',',');el.select();});
+  el.addEventListener('blur',function(){var r=parseNI(el.value);el.dataset.raw=r;el.value=fmtNI(r,pct);if(onChange)onChange();});
+  el.addEventListener('keydown',function(e){if(e.key==='Enter')el.blur();});
+}
+
+// ── BRACKET HELPER ──
+function applyBkts(base,bkts){
+  var tax=0,prev=0;
+  bkts.forEach(function(b){if(base>prev){tax+=(Math.min(base,b.lim)-prev)*b.rate;prev=b.lim;}});
+  return tax;
+}
+
+// ── TAX FUNCTIONS ──
+var UVT=49799,SMMLV=1423500;
+function calcCO(m){
+  var sal=m*.04,pen=m*.04,smlv=m/SMMLV,sr=0;
+  if(smlv>20)sr=.02;else if(smlv>19)sr=.018;else if(smlv>18)sr=.016;
+  else if(smlv>17)sr=.014;else if(smlv>16)sr=.012;else if(smlv>4)sr=.01;
+  var sol=m*sr,mand=sal+pen+sol,n0=m-mand;
+  var ex25=Math.min(n0*.25,20*UVT),dep=Math.min(m*.10,32*UVT);
+  var exT=Math.min(ex25+dep,n0*.40),base=Math.max(0,m-mand-exT),buvt=base/UVT,ruvt=0;
+  if(buvt>95&&buvt<=150)ruvt=(buvt-95)*.19;
+  else if(buvt>150&&buvt<=360)ruvt=(buvt-150)*.28+10.64;
+  else if(buvt>360&&buvt<=640)ruvt=(buvt-360)*.33+69.44;
+  else if(buvt>640&&buvt<=945)ruvt=(buvt-640)*.35+162.04;
+  else if(buvt>945&&buvt<=2300)ruvt=(buvt-945)*.37+268.79;
+  else if(buvt>2300)ruvt=(buvt-2300)*.39+770.54;
+  var ret=ruvt*UVT;
+  return{net:m-mand-ret,ret:ret,mand:mand,sal:sal,pen:pen,sol:sol,sr:sr,n0:n0,ex25:ex25,dep:dep,base:base,buvt:buvt,ruvt:ruvt};
+}
+function calcUS(m){
+  var ann=m*12,stdD=14600,fedT=Math.max(0,ann-stdD);
+  var fedBkts=[{lim:11600,rate:.10},{lim:47150,rate:.12},{lim:100525,rate:.22},{lim:191950,rate:.24},{lim:243725,rate:.32},{lim:609350,rate:.35},{lim:1e9,rate:.37}];
+  var rawFed=applyBkts(fedT,fedBkts),ctc=Math.min(2000,rawFed),fedTax=Math.max(0,rawFed-ctc);
+  var ss=Math.min(ann,168600)*.062,med=ann*.0145,fica=ss+med;
+  var njBkts=[{lim:20000,rate:.014},{lim:35000,rate:.0175},{lim:40000,rate:.035},{lim:75000,rate:.05525},{lim:500000,rate:.0637},{lim:1e9,rate:.0897}];
+  var njT=applyBkts(Math.max(0,ann-2500),njBkts),njSdi=ann*.0014,njFli=ann*.0009,nj=(njT+njSdi+njFli);
+  var totalAnn=fedTax+fica+nj;
+  return{net:m-totalAnn/12,ret:fedTax/12,mand:(fica+nj)/12,fedTax:fedTax/12,fica:fica/12,nj:nj/12,ss:ss/12,med:med/12,njT:njT/12};
+}
+function calcEU(m){
+  var ann=m*12,ssEmp=ann*.0635,otros=2000,rendN=ann-ssEmp-otros;
+  var redR=rendN<=13115?5565:rendN<=16825?5565-1.5*(rendN-13115):2000;
+  var base=Math.max(0,rendN-redR),minF=5550+2400;
+  var bkts=[{lim:12450,rate:.19},{lim:20200,rate:.24},{lim:35200,rate:.30},{lim:60000,rate:.37},{lim:300000,rate:.45},{lim:1e9,rate:.47}];
+  var irpfA=Math.max(0,applyBkts(base,bkts)-applyBkts(minF,bkts));
+  return{net:m-irpfA/12-ssEmp/12,ret:irpfA/12,mand:ssEmp/12,irpf:irpfA/12,ss:ssEmp/12,base:base,rendN:rendN,redR:redR,minF:minF};
+}
+
+// ── COMPANY COST ──
+function empCO(m){var saludE=m*.085,penE=m*.12,arl=m*.00522,sena=m*.02,icbf=m*.03,caja=m*.04,prest=m*.2083;return{items:[['Salud empleador (8.5%)',saludE],['Pensi\u00f3n empleador (12%)',penE],['ARL (0.522%)',arl],['SENA (2%)',sena],['ICBF (3%)',icbf],['Caja comp. (4%)',caja],['Prestaciones prorrateadas',prest]],total:m+saludE+penE+arl+sena+icbf+caja+prest};}
+function empUS(m){var ficaE=m*.0765,ui=m*.006,wc=m*.01;return{items:[['FICA employer (7.65%)',ficaE],['Unemployment ins. (~0.6%)',ui],['Workers comp (~1%)',wc]],total:m+ficaE+ui+wc};}
+
+function empEUf(m){var ssE=m*.236,des=m*.055,fog=m*.002,form=m*.006;return{items:[['SS empresa (23.6%)',ssE],['Desempleo empresa (5.5%)',des],['FOGASA (0.2%)',fog],['Formaci\u00f3n profesional (0.6%)',form]],total:m+ssE+des+fog+form};}
+
+// ── BRACKETS DISPLAY ──
+var BKTS={
+  co:[{lo:0,hi:95,rate:0,f:'0'},{lo:95,hi:150,rate:.19,f:'(UVT-95)\u00d719%'},{lo:150,hi:360,rate:.28,f:'(UVT-150)\u00d728%+10.64'},{lo:360,hi:640,rate:.33,f:'(UVT-360)\u00d733%+69.44'},{lo:640,hi:945,rate:.35,f:'(UVT-640)\u00d735%+162.04'},{lo:945,hi:2300,rate:.37,f:'(UVT-945)\u00d737%+268.79'},{lo:2300,hi:999999,rate:.39,f:'(UVT-2300)\u00d739%+770.54'}],
+  us:[{lo:0,hi:11600,rate:.10,f:'10%'},{lo:11600,hi:47150,rate:.12,f:'12%'},{lo:47150,hi:100525,rate:.22,f:'22%'},{lo:100525,hi:191950,rate:.24,f:'24%'},{lo:191950,hi:243725,rate:.32,f:'32%'},{lo:243725,hi:609350,rate:.35,f:'35%'},{lo:609350,hi:9999999,rate:.37,f:'37%'}],
+  eu:[{lo:0,hi:12450,rate:.19,f:'19%'},{lo:12450,hi:20200,rate:.24,f:'24%'},{lo:20200,hi:35200,rate:.30,f:'30%'},{lo:35200,hi:60000,rate:.37,f:'37%'},{lo:60000,hi:300000,rate:.45,f:'45%'},{lo:300000,hi:9999999,rate:.47,f:'47%'}]
+};
+
+// ── COUNTRY CONFIG ──
+var CC={
+  co:{sym:'$',name:'Colombia',flag:'&#127464;&#127476;',
+    sMin:2e6,sMax:50e6,sDef:16.5e6,sStep:1e5,
+    defs:{renta:1.5e6,inm:730e6,aut:60e6,caj:20e6,deu:300e6,tasa:12,plazo:120,valori:5,depre:15},
+    exp:[{l:'Vivienda (arriendo, adm., servicios)',v:2900000},{l:'Transporte (seguro, gasolina, mant.)',v:550000},{l:'Alimentaci\u00f3n',v:1100000},{l:'Salud y educaci\u00f3n del hijo',v:1050000},{l:'Conectividad y suscripciones',v:360000},{l:'Personal, ocio y ahorro programado',v:700000}],
+    tax:calcCO,emp:empCO,
+    note:'Retenci\u00f3n Art. 383 ET (Ley 2277/2022) \u00b7 UVT $49.799 \u00b7 SMMLV $1.423.500 \u00b7 Procedimiento 1 \u00b7 Con dependiente \u00b7 2025',
+    smlvLabel:function(m){return (m/SMMLV).toFixed(2)+' SMMLV';},
+    bktLabel:function(t){return t.buvt.toFixed(2)+' UVT base gravable';},
+    bktUnit:'UVT'},
+  us:{sym:'$',name:'EE.UU. (NJ)',flag:'&#127482;&#127480;',
+    sMin:1000,sMax:25000,sDef:5000,sStep:100,
+    defs:{renta:500,inm:350000,aut:30000,caj:10000,deu:150000,tasa:7,plazo:360,valori:4,depre:15},
+    exp:[{l:'Vivienda (renta, seguros, servicios)',v:2200},{l:'Transporte (cuota, seguro, gasolina)',v:635},{l:'Alimentaci\u00f3n (mercado + restaurantes)',v:850},{l:'Salud (seguro m\u00e9dico, copagos)',v:380},{l:'Hijo (guarder\u00eda, ropa, actividades)',v:980},{l:'Personal, ocio y ahorro programado',v:450}],
+    tax:calcUS,emp:empUS,
+    note:'Impuesto federal + NJ state tax + FICA \u00b7 Filing: Single + 1 hijo \u00b7 Child Tax Credit $2.000 \u00b7 Deducci\u00f3n est\u00e1ndar $14.600 \u00b7 2024',
+    smlvLabel:function(m){return '$'+(m*12).toLocaleString('en-US')+' / year';},
+    bktLabel:function(t){return '$'+Math.round(t.fedTax*12).toLocaleString('en-US')+' federal tax / year';},
+    bktUnit:'USD anual'},
+  eu:{sym:'\u20ac',name:'Espa\u00f1a (Madrid)',flag:'&#127466;&#127480;',
+    sMin:1000,sMax:15000,sDef:3000,sStep:50,
+    defs:{renta:500,inm:280000,aut:20000,caj:8000,deu:120000,tasa:3.5,plazo:240,valori:4,depre:15},
+    exp:[{l:'Vivienda (alquiler, comunidad, suministros)',v:1380},{l:'Transporte (seguro, gasolina, mant.)',v:360},{l:'Alimentaci\u00f3n (compra + restaurantes)',v:750},{l:'Salud (dental, \u00f3ptica, copagos)',v:80},{l:'Educaci\u00f3n y actividades del hijo',v:210},{l:'Personal, ocio y ahorro programado',v:350}],
+    tax:calcEU,emp:empEUf,
+    note:'IRPF escala combinada Madrid \u00b7 SS empleado 6,35% \u00b7 M\u00ednimo personal+desc. \u20ac7.950 \u00b7 2024',
+    smlvLabel:function(m){return '\u20ac'+(m*12).toLocaleString('es-ES')+' / a\u00f1o';},
+    bktLabel:function(t){return Math.round(t.base).toLocaleString('es-ES')+'\u20ac base imponible';},
+    bktUnit:'\u20ac anual'}
+};
+var CUR='co',CUR2='co';
+
+function switchCountry(c,btn){
+  CUR=c;
+  btn.parentElement.querySelectorAll('.cs-btn').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  var cfg=CC[c];
+  var sl=document.getElementById('sl1');
+  sl.min=cfg.sMin;sl.max=cfg.sMax;sl.step=cfg.sStep;sl.value=cfg.sDef;
+  // Reset param inputs
+  var D=cfg.defs;
+  function setNI(id,v,pct){var el=document.getElementById(id);if(!el)return;el.dataset.raw=v;el.value=fmtNI(v,pct);}
+  setNI('v_renta',D.renta,false);setNI('v_inm',D.inm,false);setNI('v_aut',D.aut,false);
+  setNI('v_caj',D.caj,false);setNI('v_deu',D.deu,false);
+  setNI('v_tasa',D.tasa,true);setNI('v_plazo',D.plazo,false);
+  setNI('v_valori',D.valori,true);setNI('v_depre',D.depre,true);
+  buildExp();updateP1();
+}
+function switchCountryP2(c,btn){
+  CUR2=c;
+  btn.parentElement.querySelectorAll('.cs-btn').forEach(function(b){b.classList.remove('on');});
+  btn.classList.add('on');
+  var cfg=CC[c];
+  var sl=document.getElementById('sl2');
+  sl.min=cfg.sMin;sl.max=cfg.sMax;sl.step=cfg.sStep;sl.value=cfg.sDef;
+  document.getElementById('lbl2').textContent=cfg.sym+miles(cfg.sDef);
+  updateP2();
+}
+
+function calcDebt(b,ea,n){
+  if(b<=0||n<=0)return{pmt:0,int:0,prin:0};
+  var r=Math.pow(1+ea/100,1/12)-1,pmt=b*r/(1-Math.pow(1+r,-n)),int=b*r;
+  return{pmt:pmt,int:int,prin:pmt-int};
+}
+
+// ── EXPENSES ──
+var EXP_ELS=[];
+function buildExp(){
+  var cfg=CC[CUR],g=document.getElementById('expGrid'),h='';
+  cfg.exp.forEach(function(e,i){
+    h+='<div class="er"><label>'+e.l+'</label><input class="ei" id="ee'+i+'" value="'+fmtNI(e.v,false)+'" data-raw="'+e.v+'"></div>';
+  });
+  g.innerHTML=h;
+  cfg.exp.forEach(function(e,i){
+    var el=document.getElementById('ee'+i);
+    el.addEventListener('focus',function(){el.value=String(parseNI(el.dataset.raw||el.value));el.select();});
+    el.addEventListener('blur',function(){var r=parseNI(el.value);el.dataset.raw=r;el.value=fmtNI(r,false);updateP1();});
+    el.addEventListener('keydown',function(ev){if(ev.key==='Enter')el.blur();});
+  });
+}
+function getExp(){
+  var cfg=CC[CUR],t=0;
+  cfg.exp.forEach(function(e,i){var el=document.getElementById('ee'+i);t+=(el?parseNI(el.dataset.raw||el.value):e.v)||0;});
+  return t;
+}
+
+// ── PAGE 1 ──
+function updateP1(){
+  var cfg=CC[CUR];
+  var m=+document.getElementById('sl1').value;
+  document.getElementById('lbl1').textContent=cfg.sym+miles(m);
+  var renta=gR('v_renta'),inm0=gR('v_inm'),aut0=gR('v_aut'),caj0=gR('v_caj');
+  var deu0=gR('v_deu'),tasa=gR('v_tasa'),plazo=gR('v_plazo');
+  var valori=gR('v_valori'),depre=gR('v_depre'),exp=getExp();
+  var tax=cfg.tax(m),net=tax.net,debt=calcDebt(deu0,tasa,plazo);
+  var apM=inm0*(valori/100)/12,dpM=aut0*(depre/100)/12;
+  var ingT=net+renta,uaiida=ingT-exp,resN=uaiida-debt.int-dpM;
+  var fco=ingT-exp,fcf=-debt.pmt,varC=fco+fcf;
+  var actT=caj0+inm0+aut0,pasT=deu0,patN=actT-pasT;
+  var cM=caj0,iM=inm0,aM=aut0,dM=deu0;
+  var pr=[{a:actT,p:deu0,pat:patN,c:caj0}];
+  for(var i=1;i<=12;i++){var db=calcDebt(dM,tasa,Math.max(1,plazo-i+1));cM+=fco-db.pmt;iM+=apM;aM=Math.max(0,aM-dpM);dM=Math.max(0,dM-db.prin);var a=cM+iM+aM;pr.push({a:a,p:dM,pat:a-dM,c:cM});}
+  var p6=pr[6],p12=pr[12];
+
+  document.getElementById('lblCuota').textContent=fmt(debt.pmt)+'/mes';
+  document.getElementById('lblPr').textContent=fmt(debt.prin);
+  document.getElementById('lblIn').textContent=fmt(debt.int);
+  document.getElementById('lblPN').textContent=fmt(patN);
+  document.getElementById('lblVm').textContent='+'+fmt(apM);
+  document.getElementById('lblDm').textContent='('+fmt(dpM)+')';
+
+  function set(id,v,c,sub,sc){var el=document.getElementById(id);if(!el)return;el.textContent=v;if(c)el.style.color=c;var sb=document.getElementById(id+'b');if(sb){sb.textContent=sub||'';if(sc)sb.style.color=sc;}}
+  set('kpi1',fmt(patN),'var(--ac-cyan)',fmtP(patN/actT)+' de los activos','');
+  set('kpi2',fmt(varC)+'/mes',cS(varC),varC>=0?'super\u00e1vit de caja':'d\u00e9ficit de caja',cS(varC));
+  var cob=debt.pmt>0?fco/debt.pmt:99;
+  set('kpi3',cob.toFixed(2)+'x',cob>=1.2?'var(--ac-green)':cob>=1?'var(--ac-amber)':'var(--ac-red)',cob>=1.2?'holgado (\u22651.2x)':cob>=1?'ajustado':'insuficiente','');
+  var lev=actT>0?pasT/actT:0;
+  set('kpi4',fmtP(lev),lev<=0.4?'var(--ac-green)':lev<=0.6?'var(--ac-amber)':'var(--ac-red)',lev<=0.4?'bajo (\u226440%)':lev<=0.6?'moderado':'elevado','');
+
+  function bR(lbl,m0,m6,m12,cls){
+    var d=m12-m0,dC=d===0?'':'style="color:'+(d>0?'var(--ac-green)':'var(--ac-red)')+'"';
+    return '<tr class="'+(cls||'')+'"><td>'+lbl+'</td><td class="num">'+fmt(m0)+'</td><td class="num hide-mob">'+fmt(m6)+'</td><td class="num">'+fmt(m12)+'</td><td class="num" '+dC+'>'+(d===0?'\u2014':sgn(d)+fmt(d))+'</td></tr>';
+  }
+  document.getElementById('balTbody').innerHTML=
+    '<tr class="grp"><td colspan="5">ACTIVOS</td></tr>'+bR('Efectivo y equivalentes',caj0,p6.c,p12.c,'')+bR('Inversiones inmobiliarias',inm0,inm0+apM*6,inm0+apM*12,'')+bR('Veh\u00edculo (neto depr.)',aut0,Math.max(0,aut0-dpM*6),Math.max(0,aut0-dpM*12),'')+bR('Total Activos',actT,p6.a,p12.a,'tot')+
+    '<tr class="grp"><td colspan="5">PASIVOS</td></tr>'+bR('Deuda financiera',deu0,p6.p,p12.p,'')+bR('Total Pasivos',pasT,p6.p,p12.p,'tot')+
+    '<tr class="grp"><td colspan="5">PATRIMONIO</td></tr>'+bR('Capital y resultados acumulados',patN,p6.pat,p12.pat,'')+bR('Total Pasivos + Patrimonio',actT,p6.a,p12.a,'tot');
+
+  function pR(l,v,cls,par){var dv=(par&&v<0)?'('+fmt(v)+')':fmt(v);var col=(cls==='tot')?'style="color:'+cS(v)+'"':(cls==='tot2')?'style="color:'+(v>=0?'var(--ac-cyan)':'var(--ac-red)')+'"':'';return '<tr class="'+(cls||'')+'"><td>'+l+'</td><td class="num" '+(col||'')+'>'+dv+'</td></tr>';}
+  var er='';cfg.exp.forEach(function(e,i){var el=document.getElementById('ee'+i),v=el?parseNI(el.dataset.raw||el.value):e.v;er+=pR('(\u2212) '+e.l,-v,'',true);});
+  document.getElementById('pyg').innerHTML=
+    '<tr class="grp"><td colspan="2">INGRESOS</td></tr>'+pR('(+) Salario neto (post imp. y SS)',net,'',false)+pR('(+) Renta inmobiliaria',renta,'',false)+pR('= Total ingresos',ingT,'tot2',false)+
+    '<tr class="grp"><td colspan="2">GASTOS DEL HOGAR</td></tr>'+er+pR('= Utilidad operativa (UAIIDA)',uaiida,'tot2',false)+
+    '<tr class="grp"><td colspan="2">CARGOS NO OPERATIVOS</td></tr>'+pR('(\u2212) Intereses deuda',-debt.int,'',true)+pR('(\u2212) Depreciaci\u00f3n veh\u00edculo',-dpM,'',true)+
+    pR('= Resultado neto del per\u00edodo',resN,'tot',false)+'<tr class="memo"><td colspan="2">\u25aa Memo: valorizaci\u00f3n inmob. '+fmt(apM)+' (no caja)</td></tr>';
+
+  function cR(l,v,cls,ind){var col=(cls==='tot')?'style="color:'+cS(v)+'"':(cls==='tot2')?'style="color:'+(v>=0?'var(--ac-cyan)':'var(--ac-red)')+'"':'';var iS=ind?'style="padding-left:24px;font-size:12px;color:var(--muted);"':'';return '<tr class="'+(cls||'')+'"><td '+(iS||'')+'>'+l+'</td><td class="num" '+(col||'')+'>'+(v<0?'('+fmt(v)+')':fmt(v))+'</td></tr>';}
+  document.getElementById('cf').innerHTML=
+    '<tr class="grp"><td colspan="2">OPERATIVO (FCO)</td></tr>'+cR('(+) Salario neto recibido',net,'',false)+cR('(+) Renta cobrada',renta,'',false)+cR('(\u2212) Gastos operativos',-exp,'',false)+cR('= FCO',fco,'tot2',false)+
+    '<tr class="grp"><td colspan="2">INVERSI\u00d3N (FCI)</td></tr>'+cR('(\u00b1) Compra / venta activos',0,'',false)+cR('= FCI',0,'tot2',false)+
+    '<tr class="grp"><td colspan="2">FINANCIACI\u00d3N (FCF)</td></tr>'+cR('(\u2212) Cuota total deuda',-debt.pmt,'',false)+cR('\u2192 Capital amortizado',-debt.prin,'',true)+cR('\u2192 Intereses pagados',-debt.int,'',true)+cR('= FCF',fcf,'tot2',false)+
+    '<tr class="grp"><td colspan="2">VARIACI\u00d3N DE CAJA</td></tr>'+cR('Caja apertura',caj0,'',false)+cR('\u25b6 Variaci\u00f3n neta',varC,'tot',false)+cR('\u25b6 Caja al cierre',caj0+varC,'tot',false)+
+    '<tr class="memo"><td colspan="2">Memo no caja: Val.+'+fmt(apM)+' | Depr.('+fmt(dpM)+') | \u0394Patrim.'+sgn(varC+apM-dpM)+fmt(Math.abs(varC+apM-dpM))+'</td></tr>';
+
+  // ANÁLISIS
+  var tasaAh=m>0?varC/m:0,mesEm=exp>0?caj0/exp:0,dti=ingT>0?debt.pmt/ingT:0;
+  var crecPat=patN>0?(p12.pat-patN)/patN:0,levR=actT>0?pasT/actT:0;
+  function c3(v,g,a){return v>=g?'v':v>=a?'a':'r';}
+  function c3i(v,r,a){return v<=r?'v':v<=a?'a':'r';}
+  var ahC=c3(tasaAh,.20,.05),emC=c3(mesEm,6,3),dtiC=c3i(dti,.30,.40),cobC=c3(cob,1.5,1.0),patC=c3(crecPat,.08,.04),levC=c3i(levR,.35,.55);
+  function sem(ic,t,val,cl,desc,bench){return '<div class="semCard '+cl+'"><div class="sem-ic">'+ic+'</div><div class="sem-t">'+t+'</div><div class="sem-v '+cl+'">'+val+'</div><div class="sem-d">'+desc+'</div><span class="sem-b '+cl+'">'+bench+'</span></div>';}
+  var cards='';
+  cards+=sem('&#128181;','Tasa de ahorro mensual',fmtP(tasaAh),ahC,'De cada peso de ingreso bruto, <strong>'+fmtP(Math.max(0,tasaAh))+'</strong> queda como ahorro neto real.',ahC==='v'?'\u2705 \u226520% \u2014 s\u00f3lida':ahC==='a'?'\u26a0\ufe0f 5\u201320% \u2014 mejorable':'\ufe0f <5% \u2014 zona de riesgo');
+  cards+=sem('&#127974;','Reserva de emergencia',mesEm.toFixed(1)+' meses',emC,'Con el efectivo disponible (<strong>'+fmt(caj0)+'</strong>) el hogar cubre gastos <strong>'+mesEm.toFixed(1)+' meses</strong> sin ingresos.',emC==='v'?'\u2705 6+ meses \u2014 colch\u00f3n s\u00f3lido':emC==='a'?'\u26a0\ufe0f 3\u20136 meses \u2014 m\u00ednimo':'\ufe0f <3 meses \u2014 franja vulnerable');
+  cards+=sem('&#128176;','Carga de la deuda (DTI)',fmtP(dti),dtiC,'La cuota mensual es <strong>'+fmtP(dti)+'</strong> de los ingresos netos totales del hogar.',dtiC==='v'?'\u2705 <30% \u2014 manejable':dtiC==='a'?'\u26a0\ufe0f 30\u201340% \u2014 vigilar':'\ufe0f >40% \u2014 carga alta');
+  cards+=sem('&#128203;','Cobertura de deuda',cob.toFixed(2)+'x',cobC,'El flujo operativo genera <strong>'+cob.toFixed(2)+'x</strong> el costo de la cuota. Mayor a 1.5x es holgado.',cobC==='v'?'\u2705 >1.5x \u2014 holgado':cobC==='a'?'\u26a0\ufe0f 1.0\u20131.5x \u2014 ajustado':'\ufe0f <1.0x \u2014 el flujo no alcanza');
+  cards+=sem('&#127968;','Crecimiento patrimonial',fmtP(crecPat),patC,'El patrimonio pasar\u00e1 de <strong>'+fmt(patN)+'</strong> a <strong>'+fmt(p12.pat)+'</strong> en 12 meses.',patC==='v'?'\u2705 >8%/a\u00f1o \u2014 excelente':patC==='a'?'\u26a0\ufe0f 4\u20138% \u2014 moderado':'\ufe0f <4% \u2014 bajo crecimiento');
+  cards+=sem('&#9878;&#65039;','Nivel de endeudamiento',fmtP(levR),levC,'La deuda es <strong>'+fmtP(levR)+'</strong> de los activos totales. Por debajo del 35% es conservador.',levC==='v'?'\u2705 <35% \u2014 conservador':levC==='a'?'\u26a0\ufe0f 35\u201355% \u2014 moderado':'\ufe0f >55% \u2014 apalancamiento alto');
+  document.getElementById('semGrid').innerHTML=cards;
+
+  var sc=[ahC,emC,dtiC,cobC,patC,levC],nV=sc.filter(function(s){return s==='v';}).length,nR=sc.filter(function(s){return s==='r';}).length;
+  var ov=nV>=4?'v':nR>=3?'r':'a';
+  var tit=ov==='v'?'&#127881; Salud financiera s\u00f3lida':ov==='a'?'&#9889; Finanzas estables con margen de mejora':'&#9888;&#65039; Puntos cr\u00edticos a atender';
+  var est=ov==='v'?'<span class="tag g">BUENA SALUD</span>':ov==='a'?'<span class="tag a">ESTABLE</span>':'<span class="tag r">ATENCI\u00d3N</span>';
+  var txt='<div class="dPara">'+est+' &nbsp;Con un salario de <strong>'+fmt(m)+'</strong> el hogar recibe <strong>'+fmt(net)+'</strong> netos. Con la renta inmobiliaria, el ingreso total es <strong>'+fmt(ingT)+'</strong>/mes.</div>';
+  txt+='<div class="dPara">Gastos corrientes <strong>'+fmt(exp)+'</strong> + cuota deuda <strong>'+fmt(debt.pmt)+'</strong> = <strong>'+fmt(exp+debt.pmt)+'</strong> total. Queda <strong>'+(varC>=0?'un super\u00e1vit de '+fmt(varC):'un d\u00e9ficit de '+fmt(Math.abs(varC)))+'</strong>/mes.</div>';
+  txt+='<div class="dPara">Patrimonio neto hoy: <strong>'+fmt(patN)+'</strong>. En 12 meses proyecta <strong>'+fmt(p12.pat)+'</strong> (+<strong>'+fmtP(crecPat)+'</strong>). Deuda: <strong>'+fmtP(levR)+'</strong> de activos \u2014 nivel <strong>'+(levC==='v'?'conservador':levC==='a'?'moderado':'alto')+'</strong>.</div>';
+  document.getElementById('diagTxt').innerHTML=txt;
+
+  var recos=[];
+  if(ahC!=='v')recos.push({i:'&#127919;',t:'<strong>Aumentar la tasa de ahorro:</strong> Apunta al 20% del ingreso bruto. Automatiza un ahorro fijo el d\u00eda de pago para evitar gastar lo que deber\u00edas guardar.'});
+  if(emC!=='v')recos.push({i:'&#127974;',t:'<strong>Fortalecer el fondo de emergencias:</strong> Objetivo: 3\u20136 meses de gastos en cuenta l\u00edquida. Hoy tienes '+mesEm.toFixed(1)+' meses. Faltan '+fmt(Math.max(0,(6-mesEm)*exp))+'.'});
+  if(dtiC!=='v')recos.push({i:'&#128176;',t:'<strong>Reducir la carga de la deuda:</strong> La cuota supera el 35% del ingreso. Eval\u00faa refinanciar, ampliar el plazo o hacer abonos extraordinarios al capital.'});
+  if(emC==='v'&&ahC==='v')recos.push({i:'&#128200;',t:'<strong>Diversificar inversiones:</strong> Con buen colch\u00f3n y ahorro positivo, el siguiente paso es diversificar: fondos, acciones o nuevas propiedades para no concentrar todo el patrimonio en inmobiliario.'});
+  recos.push({i:'&#128203;',t:'<strong>Revisar obligaciones tributarias:</strong> Con '+fmt(m*12)+' de ingreso anual bruto, consulta con un asesor si debes presentar declaraci\u00f3n de renta en tu pa\u00eds.'});
+  if(levC==='v')recos.push({i:'&#9878;&#65039;',t:'<strong>Aprovechar capacidad de cr\u00e9dito:</strong> Con endeudamiento del '+fmtP(levR)+' tienes margen para acceder a cr\u00e9dito favorable si surge oportunidad de inversi\u00f3n.'});
+  document.getElementById('recoList').innerHTML=recos.map(function(r){return '<li><span style="flex-shrink:0;font-size:14px;">'+r.i+'</span><span>'+r.t+'</span></li>';}).join('');
+  document.getElementById('fnNote').textContent=cfg.note;
+}
+
+// ── PAGE 2 ──
+function updateP2(){
+  var cfg=CC[CUR2];
+  var m=+document.getElementById('sl2').value;
+  document.getElementById('lbl2').textContent=cfg.sym+miles(m);
+  var tax=cfg.tax(m);
+  var emp=cfg.emp(m);
+  function fmt2(v){var sym=CC[CUR2].sym;return sym+miles(v);}
+  document.getElementById('c2_br').textContent=fmt2(m);
+  document.getElementById('c2_smlv').textContent=cfg.smlvLabel(m);
+  document.getElementById('c2_net').textContent=fmt2(tax.net);
+  document.getElementById('c2_netP').textContent=fmtP(tax.net/m)+' del bruto';
+  document.getElementById('c2_des').textContent=fmt2(tax.ret+tax.mand);
+  document.getElementById('c2_desP').textContent=fmtP((tax.ret+tax.mand)/m)+' del bruto';
+  document.getElementById('c2_cos').textContent=fmt2(emp.total);
+  document.getElementById('c2_cosX').textContent=(emp.total/m).toFixed(2)+'x el salario bruto';
+  function sR(l,v,cls,par){var dv=(par&&v<0)?'('+fmt2(v)+')':fmt2(v);var col=(cls==='tot')?'style="color:'+(v>=0?'var(--ac-green)':'var(--ac-red)')+'"':(cls==='tot2')?'style="color:'+(v>=0?'var(--ac-cyan)':'var(--ac-red)')+'"':'';return '<tr class="'+(cls||'')+'"><td>'+l+'</td><td class="num" '+(col||'')+'>'+dv+'</td></tr>';}
+
+  var calRows='';
+  if(CUR2==='co'){
+    calRows='<tr class="grp"><td colspan="2">DEDUCCIONES OBLIGATORIAS</td></tr>'+sR('Salario bruto',m,'',false)+sR('(\u2212) Salud empleado (4%)',-tax.sal,'',true)+sR('(\u2212) Pensi\u00f3n empleado (4%)',-tax.pen,'',true)+sR('(\u2212) Fondo solidaridad ('+fmtP(tax.sr)+')',-tax.sol,'',true)+sR('= Neto base exenciones',tax.n0,'tot2',false)+'<tr class="grp"><td colspan="2">C\u00c1LCULO BASE GRAVABLE</td></tr>'+sR('(\u2212) Renta exenta 25% (tope 20 UVT)',-tax.ex25,'',true)+sR('(\u2212) Deducci\u00f3n dependiente 10% (tope 32 UVT)',-tax.dep,'',true)+sR('= Base gravable',tax.base,'tot2',false)+'<tr><td style="padding-left:22px;font-size:12px;color:var(--muted);">En UVT (/ $49.799)</td><td class="num" style="font-size:12px;color:var(--muted);">'+tax.buvt.toFixed(2)+' UVT</td></tr><tr class="grp"><td colspan="2">RETENCI\u00d3N Y RESULTADO</td></tr>'+sR('Retenci\u00f3n en la fuente',-tax.ret,'',true)+'<tr><td style="padding-left:22px;font-size:12px;color:var(--muted);">En UVT</td><td class="num" style="font-size:12px;color:var(--muted);">'+tax.ruvt.toFixed(2)+' UVT</td></tr>'+sR('= Salario NETO a recibir',tax.net,'tot',false);
+  } else if(CUR2==='us'){
+    calRows='<tr class="grp"><td colspan="2">RETENCIONES FEDERALES</td></tr>'+sR('Salario bruto',m,'',false)+sR('(\u2212) Federal income tax',-tax.fedTax,'',true)+sR('(\u2212) Child Tax Credit aplicado (mensual)',Math.min(tax.fedTax,2000/12),'',true)+'<tr class="grp"><td colspan="2">FICA \u2014 SEGURO SOCIAL</td></tr>'+sR('(\u2212) Social Security (6.2%)',-tax.ss,'',true)+sR('(\u2212) Medicare (1.45%)',-tax.med,'',true)+'<tr class="grp"><td colspan="2">NEW JERSEY STATE</td></tr>'+sR('(\u2212) NJ income tax',-tax.njT,'',true)+'<tr class="grp"><td colspan="2">RESULTADO</td></tr>'+sR('= Salario NETO (take-home)',tax.net,'tot',false);
+  } else {
+    calRows='<tr class="grp"><td colspan="2">SEGURIDAD SOCIAL EMPLEADO</td></tr>'+sR('Salario bruto',m,'',false)+sR('(\u2212) SS empleado (6.35%)',-tax.ss,'',true)+sR('(\u2212) SS empleado + otros gastos',-tax.mand,'',true)+'<tr class="grp"><td colspan="2">IRPF</td></tr>'+sR('= Base imponible',tax.base,'tot2',false)+sR('(\u2212) Retenci\u00f3n mensual IRPF',-tax.irpf,'',true)+'<tr class="grp"><td colspan="2">RESULTADO</td></tr>'+sR('= Salario NETO a recibir',tax.net,'tot',false);
+  }
+  document.getElementById('calcSal').innerHTML=calRows;
+
+  var empRows='<tr class="grp"><td colspan="2">SALARIO BRUTO</td></tr>'+sR('Salario bruto empleado',m,'',false)+'<tr class="grp"><td colspan="2">CARGAS DEL EMPLEADOR</td></tr>';
+  emp.items.forEach(function(it){empRows+=sR('+ '+it[0],it[1],'',false);});
+  empRows+=sR('= Costo total empresa / mes',emp.total,'tot',false);
+  document.getElementById('calcEmp').innerHTML=empRows;
+
+  // Brackets
+  var bkts=BKTS[CUR2];
+  var activeIdx=-1;
+  if(CUR2==='co'){var buvt=tax.buvt||0;bkts.forEach(function(b,i){if(buvt>b.lo&&buvt<=b.hi)activeIdx=i;});if(activeIdx===-1&&buvt<=95)activeIdx=0;}
+  else if(CUR2==='us'){var ann=m*12,fedT=Math.max(0,ann-14600);bkts.forEach(function(b,i){if(fedT>b.lo&&fedT<=b.hi)activeIdx=i;});}
+  else{bkts.forEach(function(b,i){if(tax.base>b.lo&&tax.base<=b.hi)activeIdx=i;});}
+  document.getElementById('bktTable').innerHTML=bkts.map(function(b,i){
+    var isA=i===activeIdx;
+    var loS=fmt2(b.lo),hiS=b.hi>=9999999?'\u221e':fmt2(b.hi);
+    var st=isA?'<span style="background:var(--ac-blue);color:#fff;border-radius:5px;padding:2px 9px;font-size:10px;font-weight:600;">APLICA</span>':'';
+    return '<tr'+(isA?' class="hl"':'')+'>'+
+      '<td>#'+(i+1)+'</td>'+
+      '<td class="num">'+loS+' \u2013 '+hiS+'</td>'+
+      '<td class="num" style="color:'+(b.rate===0?'var(--ac-green)':b.rate<=.22?'var(--ac-amber)':'var(--ac-red)')+'">'+fmtP(b.rate)+'</td>'+
+      '<td style="font-family:monospace;font-size:11px;">'+b.f+'</td>'+
+      '<td style="text-align:center;">'+st+'</td></tr>';
+  }).join('');
+  document.getElementById('fn2Note').textContent=cfg.note;
+}
+
+// ── INIT ──
+buildExp();
+['v_renta','v_inm','v_aut','v_caj','v_deu','v_plazo'].forEach(function(id){setupNI(id,false,updateP1);});
+['v_tasa','v_valori','v_depre'].forEach(function(id){setupNI(id,true,updateP1);});
+document.getElementById('sl1').addEventListener('input',updateP1);
+document.getElementById('sl2').addEventListener('input',updateP2);
+updateP1();
+</script>
+</body>
+</html>
