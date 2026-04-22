@@ -302,7 +302,15 @@ input:checked+.ts:before{transform:translateX(20px);}
       <div style="text-align:right;"><div style="font-size:9px;color:var(--muted);">Variaci&oacute;n</div><div style="font-size:12px;font-weight:600;" id="kpi1_var">&#8212;</div></div>
     </div>
   </div>
-  <div class="kc"><div class="kl">Surplus / d&eacute;ficit caja &middot; mes</div><div class="kv" id="kpi2">&#8212;</div><div class="ks" id="kpi2b">&#8212;</div></div>
+  <div class="kc">
+    <div class="kl">Surplus / d&eacute;ficit caja &middot; mes</div>
+    <div class="kv" id="kpi2">&#8212;</div>
+    <div class="ks" id="kpi2b">&#8212;</div>
+    <div style="margin-top:6px;padding-top:6px;border-top:1px solid var(--border);">
+      <div style="font-size:9px;color:var(--muted);">M&aacute;x. ahorro posible</div>
+      <div style="font-size:12px;font-weight:600;color:var(--ac-green);" id="kpi2_maxahorro">&#8212;</div>
+    </div>
+  </div>
   <div class="kc"><div class="kl">Cobertura deuda &middot; FCO / cuota</div><div class="kv" id="kpi3">&#8212;</div><div class="ks" id="kpi3b">&#8212;</div></div>
   <div class="kc"><div class="kl">Ratio deuda / activos</div><div class="kv" id="kpi4">&#8212;</div><div class="ks" id="kpi4b">&#8212;</div></div>
   <div class="kc" style="border-top:2px solid var(--ac-orange);"><div class="kl">Gasto operativo &middot; mes</div><div class="kv" id="kpi5">&#8212;</div><div class="ks" id="kpi5b">&#8212;</div></div>
@@ -366,7 +374,16 @@ function fmtNI(v,pct){
   p[0]=p[0].replace(/\B(?=(\d{3})+(?!\d))/g,'.');
   return p.join(',');
 }
-function gR(id){var el=document.getElementById(id);return el?parseNI(el.dataset.raw||el.value):0;}
+function gR(id){
+  var el=document.getElementById(id);if(!el)return 0;
+  var raw=el.dataset.raw;
+  // dataset.raw is stored as JS number (e.g. "3.5") — use parseFloat directly
+  // to avoid parseNI stripping the dot (which it treats as thousands separator)
+  if(raw!==undefined&&raw!==''&&!isNaN(parseFloat(raw))&&String(raw).indexOf(',')===-1){
+    return parseFloat(raw);
+  }
+  return parseNI(el.value);
+}
 
 function setupNI(id,pct,onChange){
   var el=document.getElementById(id);if(!el)return;
@@ -581,6 +598,9 @@ function updateP1(){
     kpi1var.style.color=patVar>=0?'var(--ac-green)':'var(--ac-red)';
   }
   set('kpi2',fmt(varCaja)+'/mes',cS(varCaja),varCaja>=0?'super\u00e1vit de caja':'d\u00e9ficit de caja',cS(varCaja));
+  var maxAhorro=fco-debt.pmt; // max ahorro = FCO - servicio deuda
+  var el_ma=document.getElementById('kpi2_maxahorro');
+  if(el_ma){el_ma.textContent=fmt(Math.max(0,maxAhorro))+'/mes';el_ma.style.color=maxAhorro>0?'var(--ac-green)':'var(--ac-red)';}
   var cob=debt.pmt>0?fco/debt.pmt:99;
   set('kpi3',cob.toFixed(2)+'x',cob>=1.2?'var(--ac-green)':cob>=1?'var(--ac-amber)':'var(--ac-red)',cob>=1.2?'holgado (\u22651.2x)':cob>=1?'ajustado':'insuficiente','');
   var lev=actT>0?pasT/actT:0;
@@ -732,44 +752,44 @@ var SCENARIOS = {
       salary:2500, renta:250,
       inm:175000, aut:15000, caj:0, deu:75000,
       tasa:7, plazo:360, valori:4, depre:15,
-      exp:[1100,320,425,490,190,225],
+      exp:[1000,180,350,180,100,221],
       sub:'~$2,500/mes · New Jersey'
     },
     medio: {
       salary:5000, renta:500,
       inm:350000, aut:30000, caj:0, deu:150000,
       tasa:7, plazo:360, valori:4, depre:15,
-      exp:[2200,635,850,980,380,450],
+      exp:[1800,350,600,400,170,401],
       sub:'~$5,000/mes · New Jersey'
     },
     alto: {
       salary:10000, renta:1000,
       inm:700000, aut:60000, caj:0, deu:300000,
       tasa:7, plazo:360, valori:4, depre:15,
-      exp:[4400,1270,1700,1960,760,900],
+      exp:[3000,600,1000,700,300,851],
       sub:'~$10,000/mes · New Jersey'
     }
   },
   eu: {
     basico: {
-      salary:1500, renta:300,
+      salary:1500, renta:200,
       inm:140000, aut:10000, caj:0, deu:60000,
       tasa:3.5, plazo:240, valori:4, depre:15,
-      exp:[690,180,375,105,40,75,175],
+      exp:[550,120,270,80,40,80,56],
       sub:'~€1.500/mes · Madrid'
     },
     medio: {
-      salary:3000, renta:500,
+      salary:3000, renta:400,
       inm:280000, aut:20000, caj:0, deu:120000,
       tasa:3.5, plazo:240, valori:4, depre:15,
-      exp:[1380,360,750,210,80,150,350],
+      exp:[1000,220,450,140,60,100,83],
       sub:'~€3.000/mes · Madrid'
     },
     alto: {
-      salary:6000, renta:1000,
+      salary:6000, renta:800,
       inm:560000, aut:40000, caj:0, deu:240000,
       tasa:3.5, plazo:240, valori:4, depre:15,
-      exp:[2760,720,1500,420,160,300,700],
+      exp:[1700,400,800,250,90,150,149],
       sub:'~€6.000/mes · Madrid'
     }
   }
